@@ -56,7 +56,7 @@ One complete worked example per output type, each including a draft rewrite, a S
 
 ```bash
 mkdir -p ~/.claude/skills
-git clone https://github.com/[your-username]/humanizer-svenska.git ~/.claude/skills/humanizer-svenska
+git clone https://github.com/humanizer-svenska.git ~/.claude/skills/humanizer-svenska
 ```
 
 **Manual install** (if you already have the file)
