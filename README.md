@@ -75,13 +75,12 @@ In Claude Code, invoke the skill:
 ```
 /humanizer-svenska
 
-[klistra in din text här]
 ```
 
 Or ask Claude directly:
 
 ```
-Humanisera den här texten: [din text]
+Humanisera den här texten:
 ```
 
 **Specify output type for best results**
@@ -91,7 +90,6 @@ The skill handles four registers with different conventions. If you specify the 
 ```
 /humanizer-svenska rapport
 
-[klistra in din text här]
 ```
 
 Available types: `affärsskrivande`, `rapport`, `artikel`, `sociala medier`
@@ -145,28 +143,9 @@ Removing AI patterns produces clean but often flat text. The skill includes acti
 
 ---
 
-## Contributing
-
-Contributions welcome. See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for guidelines.
-
-The most useful contributions are:
-
-- New trigger words or phrases observed in Swedish AI output
-- Additional before/after examples for any output type
-- Examples from industries or contexts not currently represented
-- Corrections to register guidance based on domain expertise
-
----
-
 ## Changelog
 
 See [`CHANGELOG.md`](./CHANGELOG.md).
-
----
-
-## License
-
-MIT. See [`LICENSE`](./LICENSE).
 
 ---
 
@@ -174,4 +153,3 @@ MIT. See [`LICENSE`](./LICENSE).
 
 - [Humanizer (English)](https://github.com/anthropics/claude-skills/tree/main/humanizer) – the English-language skill this is based on
 - [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) – the foundational reference for pattern documentation
-- [Pedagog Malmö: Kan man upptäcka AI-genererade texter?](https://pedagog.malmo.se/bloggposter/kan-man-upptacka-ai-genererade-texter/) – Swedish-language source on AI text detection patterns
