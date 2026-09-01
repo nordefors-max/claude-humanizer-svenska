@@ -1,14 +1,14 @@
 ---
 name: humanizer-svenska
-version: 2.0.0
+version: 3.0.0
 description: |
-  Remove signs of AI-generated writing from Swedish professional text.
-  Covers business writing, report writing, article writing, and social media posts.
-  Detects and fixes patterns specific to Swedish AI output including: 
-  significance inflation, passive voice as false formality, nominalization overuse, 
-  anglification, vague attribution, structural tells, sycophancy, filler phrases,
-  excessive hedging, knowledge-cutoff disclaimers, copula avoidance, bullet/emoji 
-  formatting, and soulless register.
+  Rewrite AI-sounding Swedish professional text so it reads naturally without
+  changing what it says. Use when editing or reviewing Swedish prose (business
+  writing, reports, articles, LinkedIn posts) for significance inflation, sales
+  language, passive voice as false formality, nominalization, anglicisms, vague
+  sources, stock AI words, filler, hedging, chatbot artifacts, fake-candid
+  openers, formulaic sayings, or dash and quote typography. Patterns follow
+  blader/humanizer 2.11.2, adapted to Swedish.
 allowed-tools:
   - Read
   - Write
@@ -18,9 +18,11 @@ allowed-tools:
 
 # Humanizer Svenska: Ta bort AI-mönster ur professionell text
 
-Du är en svensk textredigerare som identifierar och tar bort tecken på AI-genererad text 
-för att göra skrivandet mer naturligt och mänskligt. Guiden är baserad på observerade 
-mönster i tusentals AI-genererade svenska texter, med fokus på professionellt skrivande.
+Skriv om AI-klingande svensk text så att den låter som skribenten, inte som en chattbot. 
+Ändra inte vad texten säger och hitta inte på detaljer. Guiden bygger på observerade 
+mönster i AI-genererad svenska, med fokus på professionellt skrivande. Mönsterlistan 
+följer [blader/humanizer](https://github.com/blader/humanizer) 2.11.2 (Wikipedias 
+"Signs of AI writing"), anpassad till hur AI skriver svenska.
 
 ## Din uppgift
 
@@ -29,13 +31,36 @@ När du får en text att humanisera:
 1. **Fråga om texttyp om det är oklart** – Affärstext, rapport, artikel eller sociala medier 
    har olika register. Om det inte framgår av texten eller instruktionen, fråga innan du börjar.
 2. **Identifiera AI-mönster** – Scanna efter mönstren nedan
-3. **Skriv om problematiska avsnitt** – Ersätt AI-ismer med naturliga alternativ
-4. **Bevara betydelsen** – Håll kärnbudskapet intakt
-5. **Matcha rätt register** – Applicera rätt ton utifrån texttypen
-6. **Tillför röst** – Ta inte bara bort dåliga mönster, tillför verklig personlighet
+3. **Behåll varje påstående** – Du får korta ner det tråkiga, bygga ut det användbara och 
+   slå ihop eller dela stycken. Informationen ska finnas kvar även när strukturen ändras.
+4. **Hitta inte på fakta** – Lägg inte till en uppgift, ett namn, en siffra, ett datum, ett 
+   citat eller en källa som inte finns i underlaget eller kommer från användaren. Saknas en 
+   detalj som meningen behöver: fråga, eller skriv en enklare mening. En åsikt eller reaktion 
+   får du tillföra när rösten kräver det, men aldrig ett faktapåstående.
+5. **Matcha rätt register** – Applicera rätt ton utifrån texttypen, och skribentens egen röst 
+   om det finns ett textprov (se nedan)
+6. **Tillför röst när det passar** – Krönikor, inlägg, mejl och debattartiklar ska ha en 
+   människa bakom sig. Rapporter, avtalstext och myndighetstext ska vara sakliga; tillför inte 
+   åsikter eller jag-form där de inte hör hemma.
 7. **Gör ett avslutande AI-test** – Fråga: "Vad avslöjar att det här fortfarande är AI-genererat?" 
    Svara kortfattat. Fråga sedan: "Vad saknar texten för att låta skriven av en verklig person 
    med en verklig åsikt?" Revidiera baserat på båda svaren.
+
+Vad du lämnar tillbaka styrs av hur texten kom in. Se [Så returnerar du resultatet](#så-returnerar-du-resultatet).
+
+---
+
+## MATCHA SKRIBENTENS RÖST
+
+Om användaren skickar med ett textprov (egen tidigare text), analysera det innan du skriver om:
+
+1. Läs provet först. Notera meningslängd, ordval, hur stycken öppnar, interpunktion, 
+   återkommande fraser och övergångar.
+2. Matcha vanorna. Byt inte ut vardagliga ord mot formella och ta inte bort medvetna egenheter.
+3. Finns inget prov: följ riktlinjerna nedan.
+
+Ett textprov går före stilreglerna i den här guiden. Använder provet tankstreck som inskott, 
+behåll dem i ungefär samma takt (se §21).
 
 ---
 
@@ -43,6 +68,10 @@ När du får en text att humanisera:
 
 Att undvika AI-mönster är bara halva jobbet. Steril, röstlös text avslöjar sig lika 
 mycket som slarvigt AI-innehåll. Bra svensk professionell text har en människa bakom sig.
+
+Det gäller texter med en avsändare: artiklar, inlägg, mejl, förslag. En rapport eller ett 
+beslutsunderlag ska vara sakligt; där tillför du tydlighet, inte åsikter. Och hitta aldrig 
+på fakta för att texten ska kännas personlig.
 
 ### Tecken på röstlös text (även om den är tekniskt "ren"):
 - Varje mening har samma längd och struktur
@@ -97,8 +126,8 @@ historiska vändpunkter eller avgörande skifte.
 > transformation.
 
 **Efter:**
-> Verktyget kortar handläggningstiden med ungefär 40% och minskar manuella moment i 
-> tre av fyra processflöden.
+> Verktyget automatiserar delar av affärsprocessen. (Skriv hur mycket tid eller hur många 
+> moment det sparar bara om siffran finns i underlaget. Hitta inte på en.)
 
 ---
 
@@ -156,9 +185,17 @@ ledande aktörer, tongivande röster
 > Branschkällor pekar på att investeringarna förväntas fördubblas inom de närmaste åren.
 
 **Efter:**
-> Enligt Kantar Sifos rapport från Q1 2025 har 60% av svenska detaljhandlare inte 
-> uppdaterat sina hållbarhetsriktlinjer på över tre år. Det är inte en åsikt, det är 
-> ett problem med ett datum på sig.
+> Vår bedömning är att företag som inte anpassar sig tappar marknadsandelar. (Namnge 
+> källan om underlaget har en. Har det ingen: skriv påståendet som skribentens egen 
+> bedömning, som här, eller stryk det. Gör det inte till ett faktum. Prognosen om 
+> fördubbling saknar stöd i underlaget och stryks.)
+
+Namnge en verklig källa när underlaget ger en. Annars: ta bort det ostödda påståendet. 
+Hitta aldrig på en källa.
+
+**Namedropping:** "Vårt arbete har uppmärksammats av DI, SvD, Breakit och Resumé" utan att 
+säga vad som sades. Behåll den omnämning som faktiskt säger något, stryk resten. Hitta inte 
+på ett sammanhang för att motivera en kortare lista.
 
 ---
 
@@ -295,9 +332,12 @@ Förutom ovanstående, se särskilt upp med dessa i inlägg:
 - "Tack för att du delar det här, det är verkligen intressant."
 - "Hoppas det här hjälper! Hör av dig om du har fler frågor."
 - "Stort lycka till med projektet!"
+- "Vill du att jag utvecklar någon punkt?" / "Ska jag fortsätta?" / "Här är en sammanställning av..."
 
 **Problem:** AI-text försöker behaga läsaren med onödig positiv förstärkning. 
-Det signalerar omedelbart ett icke-mänskligt ursprung, och det underminerar trovärdigheten.
+Det signalerar omedelbart ett icke-mänskligt ursprung, och det underminerar trovärdigheten. 
+Samma sak med chattbotens hälsning, erbjudande eller avslut som blivit kvar i en text som 
+ska stå för sig själv.
 
 **Innan:**
 > Vilken intressant fråga! Det är verkligen ett komplext område. Jag hoppas att den 
@@ -374,8 +414,17 @@ informationen är osäker – inte att skribenten har begränsade kunskaper.
 > kan det konstateras att marknaden troligen kommer att växa.
 
 **Efter:**
-> Marknaden förväntas växa, enligt IARBs prognos från 2024. Siffrorna uppdateras 
-> i mars 2025.
+> Marknaden förväntas växa. (Ange vems prognos, om underlaget säger det. Annars stryk 
+> meningen; hitta inte på en källa.)
+
+**Innan (spekulativ lucktäppning):**
+> Uppgifter om grundarens bakgrund är inte offentliga, vilket tyder på att hon håller en 
+> låg profil. Hon växte troligen upp i en företagarfamilj, vilket formade hennes intresse 
+> för entreprenörskap.
+
+**Efter:**
+> Grundarens bakgrund framgår inte av underlaget. (Eller stryk meningen. En gissning 
+> med "troligen", "det är rimligt att anta" eller "vilket tyder på" är inte fakta.)
 
 ---
 
@@ -431,6 +480,337 @@ löpande resonemang styckas upp i listor utan att det tillför struktur.
 
 ---
 
+### 17. Säljspråk
+
+**Ord att se upp med:**
+ledande, marknadsledande, innovativ, unik, skräddarsydd, i framkant, i världsklass, 
+förstklassig, kraftfull, sömlös, passionerad, vi brinner för, ett nav för, hjärtat i, 
+ett måste
+
+**Problem:** AI-text låter som en annons, särskilt när den beskriver företag, produkter, 
+platser eller organisationer. Svenska läsare misstror superlativ. Beskriv sakligt.
+
+**Innan:**
+> Vi är en ledande, innovativ aktör inom ekonomisystem för grossister, i framkant av 
+> digitaliseringen, och erbjuder skräddarsydda lösningar i världsklass.
+
+**Efter:**
+> Vi gör ekonomisystem för grossister.
+
+---
+
+### 18. Överanvända AI-ord
+
+**Högfrekventa AI-ord på svenska:**
+dessutom, vidare, därtill, ytterligare (staplade som styckeöppnare), avgörande, central, 
+nyckel- (nyckelfaktor, nyckelinsikt), landskap (abstrakt), belysa, understryka, betona, 
+fördjupa oss i, dyka ner i, utforska, främja, möjliggöra, robust, sömlös, holistisk, 
+dynamisk, innovativ, optimera, skalbar, värdefull, levande, i grunden, samspel, väv
+
+**Problem:** AI använder de här orden mycket oftare än de flesta människor, och gärna 
+flera i samma stycke. Ett enskilt "dessutom" är inget tecken. Fem i en text är det.
+
+**Innan:**
+> Dessutom är det avgörande att belysa samspelet mellan robusta processer och en dynamisk 
+> kultur, vilket i grunden möjliggör en sömlös och skalbar tillväxt i ett föränderligt landskap.
+
+**Efter:**
+> Processerna och kulturen måste fungera ihop för att företaget ska kunna växa. (Säg hur, 
+> om underlaget berättar det.)
+
+---
+
+### 19. Synonymväxling och upprepade meningsstarter
+
+**Problem:** AI hanterar upprepning efter regel, inte efter öra. Den byter namn på samma 
+sak ("företaget", "bolaget", "organisationen", "aktören") för att slippa upprepa ett ord, 
+eller börjar flera meningar i rad med samma subjekt.
+
+Använd ett tydligt namn för samma sak. Upprepade meningsstarter: slå ihop meningar, byt 
+subjekt där det hjälper, eller börja med handlingen.
+
+**Innan (synonymväxling):**
+> Företaget växte snabbt under 2023. Bolaget rekryterade 40 personer. Organisationen 
+> öppnade kontor i Malmö. Aktören ses nu som etablerad.
+
+**Efter:**
+> Företaget växte snabbt 2023, rekryterade 40 personer och öppnade kontor i Malmö.
+
+**Innan (upprepade starter):**
+> Vi såg problemet. Vi analyserade orsakerna. Vi tog fram en åtgärdsplan.
+
+**Efter:**
+> När vi hade sett problemet och analyserat orsakerna tog vi fram en åtgärdsplan.
+
+Förbjud inte det upprepade ordet. Åtgärda det upprepade meningsmönstret. Den kvarvarande 
+meningen får fortfarande börja med "Vi".
+
+---
+
+### 20. Falska spann ("från X till Y")
+
+**Problem:** AI skriver "från X till Y" när X och Y inte är ändpunkter på en verklig 
+skala. Det låter heltäckande men listar bara två saker.
+
+**Innan:**
+> Vi hjälper er hela vägen från strategi till genomförande, från insikt till handling, 
+> från data till beslut.
+
+**Efter:**
+> Vi hjälper till med strategi, genomförande och analys. (Lista det underlaget faktiskt 
+> nämner.)
+
+---
+
+### 21. Tankstreck, citattecken och versaler (svensk typografi)
+
+Här skiljer sig svenskan från den engelska guiden. Tankstreck och typografiska citattecken 
+är korrekt svenska, så de är inte AI-tecken i sig. Det är fel tecken och överanvändning 
+som avslöjar.
+
+**Långt tankstreck (—):** Används inte i svensk typografi. Ersätt alltid: med kort 
+tankstreck (–), komma, punkt, kolon eller parentes, eller skriv om meningen.
+
+**Kort tankstreck (–) som inskott:** Korrekt, men AI lägger ett inskott – som det här – i 
+varannan mening. Finns ett textprov, behåll dess takt. Annars: högst något enstaka inskott 
+per text; skriv om resten med komma eller punkt. Rör aldrig tankstreck i intervall och 
+relationer ("2020–2024", "Stockholm–Göteborg", "3–4 veckor") eller replikstreck i dialog.
+
+**Citattecken:** Svensk text använder ”…” (samma tecken före och efter) eller raka "…". 
+Engelska “…” (66–99) i svensk text är ett tecken, liksom blandade stilar i samma dokument. 
+Följ dokumentets konvention. Blanda inte.
+
+**Versaler i rubriker:** Svenska rubriker har stor bokstav bara i första ordet och 
+egennamn. "Varför Kultur Slår Teknik" är engelsk versalisering, och nästan alltid AI.
+
+**Innan:**
+> Strategin — som togs fram under våren — bygger på tre delar. Vd:n kallar den “vår 
+> viktigaste satsning” — och det är ingen överdrift.
+
+**Efter:**
+> Strategin, som togs fram under våren, bygger på tre delar. Vd:n kallar den ”vår 
+> viktigaste satsning”, och det är ingen överdrift.
+
+Sök efter — i slutversionen och ta bort varje förekomst. Räkna – som inskott. Ligger 
+antalet över textprovets takt, eller över ett par per text utan prov, skriv om.
+
+---
+
+### 22. Låtsad djupare sanning
+
+**Fraser att se upp med:**
+den egentliga frågan är, i grund och botten, i slutändan handlar det om, kärnan i det 
+hela, det som verkligen spelar roll, vad det egentligen handlar om, i själva verket, 
+det djupare problemet
+
+**Problem:** AI använder fraserna för att få en vanlig poäng att låta som en dold sanning.
+
+**Innan:**
+> Den egentliga frågan är om teamen kan ställa om. I grund och botten handlar det om 
+> organisationens mognad.
+
+**Efter:**
+> Frågan är om teamen kan ställa om. Det beror mest på om organisationen är beredd att 
+> ändra sina vanor.
+
+---
+
+### 23. Annonsering av nästa poäng
+
+**Fraser att se upp med:**
+låt oss dyka ner i, låt oss titta närmare på, låt oss bryta ner det, här är vad du 
+behöver veta, nu till det viktiga, utan vidare omsvep, en sak att ha koll på:, kort 
+notering:, innan jag glömmer
+
+**Problem:** AI annonserar nästa poäng i stället för att göra den. En vardaglig variant 
+("en sak som bet mig ordentligt, så läs noga:") har samma problem. Ta bort annonseringen, 
+inte bara dess formella ton.
+
+**Innan:**
+> Låt oss dyka ner i hur upphandlingen fungerar. Här är vad du behöver veta.
+
+**Efter:**
+> Upphandlingen sker i tre steg: annonsering, anbud och tilldelning.
+
+---
+
+### 24. Rubrik som upprepas i första meningen
+
+**Problem:** AI följer ofta en rubrik med en mening som bara säger om rubriken innan det 
+riktiga innehållet börjar. Stryk den meningen.
+
+**Innan:**
+> ## Leveranstider
+>
+> Leveranstiden är viktig.
+>
+> När kunder väntar mer än tre dagar avbryter var fjärde köpet.
+
+**Efter:**
+> ## Leveranstider
+>
+> När kunder väntar mer än tre dagar avbryter var fjärde köpet.
+
+---
+
+### 25. Forcerade punchlines och dramatiska fragment
+
+**Problem:** AI gör varje mening till en slagkraftig slutrad. En kort mening kan ge 
+eftertryck. En rad korta fragment känns konstruerad.
+
+**Innan:**
+> Sedan kom AI. Inga möten. Inga beslutsunderlag. Ingen väntan. Spelreglerna var borta.
+
+**Efter:**
+> När vi införde AI-verktyget försvann flera möten och beslutsunderlag, och väntetiderna 
+> kortades. Det ändrade hur vi arbetar.
+
+---
+
+### 26. Formelartade talesätt
+
+**Mönster att se upp med:**
+X är det nya Y, data är den nya oljan, förtroende är den nya valutan, X är inte ett 
+verktyg utan ett förhållningssätt, X är språket för Y, X blir en fälla, arkitekturen 
+bakom X
+
+**Problem:** AI gör om ett vanligt påstående till ett talesätt som låter djupt men inte 
+tillför någon detalj. Ersätt talesättet med det konkreta påstående underlaget stödjer.
+
+**Innan:**
+> Data är den nya oljan. Effektivitet blir en fälla när teamen glömmer det mänskliga lagret.
+
+**Efter:**
+> Företag som samlar in köpdata kan prissätta bättre än de som inte gör det. Team som 
+> optimerar processen för hårt missar ofta hur folk faktiskt använder den.
+
+---
+
+### 27. Låtsad uppriktighet
+
+**Fraser att se upp med:**
+Ärligt talat?, Låt oss vara ärliga:, Sanningen är att, Här är grejen:, Det är så här:, 
+Rent krasst:, Om jag ska vara helt ärlig, när de används som fristående krokar eller 
+konstpaus före en vanlig poäng.
+
+**Problem:** AI inleder med en iscensatt paus eller ett anspråk på ärlighet före en 
+rutinpoäng. Säg poängen direkt.
+
+**Innan:**
+> Är det värt pengarna? Ärligt talat? Det beror på hur ofta ni använder det.
+
+**Efter:**
+> Om det är värt pengarna beror på hur ofta ni använder det.
+
+---
+
+### 28. Svar på invändningar ingen gjort
+
+**Fraser att se upp med:**
+det här handlar inte (främst) om, jag säger inte att, jag menar inte att, för att vara 
+tydlig, missförstå mig rätt, det betyder inte att, man kan förstås invända att... men, 
+vissa skulle säga... men
+
+**Problem:** AI bemöter en invändning som inte finns i texten. Var uppmärksam på ett 
+påstående om vad skribenten *inte* menar, särskilt när ämnet inte nämns någon annanstans. 
+Ett direkt påstående som "systemet är inte trådsäkert" är inte det här mönstret.
+
+**Innan:**
+> Det här handlar inte främst om budget, och jag säger inte att verktygen är oviktiga. 
+> Man kan förstås se problemet på andra sätt, men frågan är om teamet kan använda 
+> instruktionen när det gäller.
+
+**Efter:**
+> Frågan är om teamet kan använda instruktionen när det gäller.
+
+Ta bara bort det ostödda försvaret. Innehåller det ett verkligt påstående, skriv ut det 
+direkt. Behåll en invändning när texten namnger dess källa eller besvarar den fullt ut.
+
+---
+
+### 29. Avfärdande av påhittade alternativ
+
+**Fraser att se upp med:**
+ett frestande alternativ vore, man skulle kunna tänka sig att, det enkla vore att, en 
+uppenbar lösning vore, du kanske tänker att... men, vissa skulle föreslå
+
+**Problem:** AI lanserar ett alternativ ingen läsare skulle överväga, avfärdar det i en 
+bisats och nämner det aldrig igen. Ofta är det en rest från ett tidigare utkast. Ta bort 
+det påhittade alternativet och skriv den verkliga begränsningen direkt.
+
+**Innan:**
+> Vi fakturerar månadsvis. Ett frestande alternativ vore att fakturera per projekt, men 
+> det skulle ge oförutsägbara intäkter. Faktureringen sker i stället löpande, och kunderna 
+> får en samlad faktura.
+
+**Efter:**
+> Vi fakturerar månadsvis, och kunderna får en samlad faktura.
+
+Ett enstaka avfärdat alternativ kan vara berättigat. Flera korta, orelaterade avfärdanden 
+är ett starkare tecken. Fråga vad varje mening tillför. Registrerar den bara en tidigare 
+redigering, skriv om stycket kring dess huvudpoäng.
+
+---
+
+## KONTROLLERA FALSKA POSITIVA
+
+### Vad du inte ska flagga
+
+En människa kan använda flera av mönstren ovan. Ta inte något av det här som bevis i sig:
+
+- **Felfri grammatik och konsekvent stil.** Många skribenter är proffs eller har blivit 
+  redigerade. Polish är inte AI.
+- **Formella eller akademiska ord.** §18 listar specifika ord som AI överanvänder. 
+  Förenkla inte varje formellt ord.
+- **Ett enskilt "dessutom", "vidare" eller "därtill".** Övergångsord är AI-kodade först 
+  när de staplas. Ett "dock" är inget tecken.
+- **Tankstreck i sig.** Kort tankstreck är korrekt svenska och används flitigt av 
+  journalister och redaktörer. Det är takten och det långa strecket (—) som räknas (§21).
+- **Typografiska citattecken i sig.** Word, Google Docs och de flesta CMS gör om raka 
+  citattecken automatiskt. Räknas bara ihop med andra tecken, eller när stilen är engelsk.
+- **Passiv röst i myndighetstext och avtal.** "Beslutet överklagas till förvaltningsrätten" 
+  är genrekorrekt. §5 gäller passiv som *falsk* formalitet, inte passiv som genrekrav.
+- **En kort mening för eftertryck.** Flagga dramatiska fragment först när flera kommer i rad.
+- **Avsiktligt upprepade starter.** "Vi kom. Vi såg. Vi levererade." kan vara rytm. Ändra 
+  bara när upprepningen inte tillför något.
+- **"Ärligt talat" eller "alltså" mitt i en mening.** Vanligt i vardaglig svenska. Tecknet 
+  är den fristående teatrala öppningen, inte ordet.
+- **Nödvändiga förbehåll.** Behåll avgränsningar, juridiska och säkerhetsrelaterade 
+  upplysningar, verkliga rättelser, namngivna invändningar, svar och FAQ-svar.
+- **Verkliga alternativ.** Behåll alternativ en läsare kan överväga i ett beslutsunderlag, 
+  en guide eller ett resonemang. Ta bara bort ett osannolikt alternativ som texten avfärdar 
+  och aldrig använder igen.
+- **Källösa påståenden.** Det mesta på nätet saknar källhänvisning. Avsaknad av källor 
+  bevisar ingenting.
+- **Andrahandstext.** Skriv inte om bevakade fraser inuti citat, titlar, egennamn eller 
+  exempel där frasen diskuteras snarare än används.
+- **Sammansatta ord.** "Datadriven" och "kundfokuserad" är korrekt svenska. Särskrivning 
+  ("data driven") är ett språkfel, inte ett AI-tecken.
+
+När du är osäker: leta efter flera mönster tillsammans. Ett tankstreck bevisar ingenting. 
+Flera standardmönster i samma stycke är starkare bevis.
+
+### Mänskliga detaljer att behålla
+
+De här detaljerna bär ofta skribentens röst. Behåll dem om de inte skadar betydelsen:
+
+- **Specifika, udda detaljer.** En riktig adress, ett konstigt citat, "revisorn som satt 
+  en trappa upp från min tandläkare".
+- **Blandade känslor och olösta spänningar.** "Jag tycker att det här mest är bra, men 
+  något skaver, och jag kan inte riktigt förklara vad."
+- **Tidsbundna referenser.** Slang, memes eller interna skämt som hör till ett visst år 
+  och en viss krets. Modeller ligger ett år eller mer efter.
+- **Medvetna förstapersonsval.** Behåll ett ordval eller en strykning skribenten kan 
+  motivera.
+- **Variation i meningslängd.** Riktig text växlar kort och lång. AI-text tenderar mot en 
+  jämn, medellång takt.
+- **Genuina utvikningar, parenteser och självrättelser.** "(Jag vill hela tiden skriva 
+  'nästan' här, men det var faktiskt säkert.)" Modeller avbryter sällan sig själva så.
+- **Text skriven före 30 november 2022.** ChatGPT:s lansering. Äldre text är, med mycket 
+  få undantag, inte AI-skriven.
+
+---
+
 ## REGISTER PER TEXTTYP
 
 ### Affärsskrivande (mejl, offerter, presentationer, intern kommunikation)
@@ -474,19 +854,37 @@ löpande resonemang styckas upp i listor utan att det tillför struktur.
 7. Ställ frågan: **"Vad avslöjar att det här fortfarande är AI-genererat?"**
 8. Svara kort med kvarvarande tecken
 9. Ställ frågan: **"Vad saknar texten för att låta skriven av en verklig person med 
-   en verklig åsikt?"**
-10. Revidiera och presentera slutversionen
+   en verklig åsikt?"** (hoppa över för rapporter och annan saklig text)
+10. Ställ frågan: **"Har omskrivningen lagt till eller tagit bort någon uppgift, ett namn, 
+    en siffra, ett datum, ett citat, en källa eller en rangordning?"** Varje tillägg utan 
+    stöd i underlaget och varje tappat påstående är ett fel. Rätta det.
+11. Sök efter — och räkna – som inskott (§21)
+12. Revidiera och presentera slutversionen. Formulera varje poäng naturligt i stället för 
+    att lappa en flaggad fras i taget. Är en mening fortfarande stel, skriv om stycket 
+    kring dess huvudpoäng.
 
-## Utdataformat
+## Så returnerar du resultatet
 
+**Inklistrad text (standard).** Returnera:
 1. Utkast till omskrivning
 2. "Vad avslöjar att det här är AI-genererat?" (korta punkter)
 3. Slutlig version
 4. Kort sammanfattning av ändringar (valfritt, om det tillför värde)
 
+**Filläge.** När användaren pekar på en fil: kör hela processen men skriv bara slutversionen 
+till filen. Ändra bara löptext. Rör inte kodblock, YAML-metadata, tabelldata eller länkmål. 
+Ge sedan användaren en kort sammanfattning.
+
+**Inbäddat läge.** När en annan uppgift använder den här färdigheten för ett mejl, en 
+PR-beskrivning, ett commit-meddelande eller ett dokument: returnera bara slutversionen.
+
 ---
 
 ## FULLSTÄNDIGA EXEMPEL
+
+Siffror, källor och kundcase i exemplen nedan är illustrativa: de visar vilken *typ* av 
+konkretion som ersätter AI-mönstren. I ett verkligt uppdrag får sådana uppgifter bara komma 
+från underlaget eller användaren (Din uppgift, punkt 4). Saknas de: fråga, eller skriv enklare.
 
 ---
 
@@ -579,8 +977,7 @@ löpande resonemang styckas upp i listor utan att det tillför struktur.
 > I tio år har varumärken betalat Google och Meta för att gissa sig till köpintentionen. 
 > Nu sitter ICA, Coop och Zalando på den faktiska köphistoriken och säljer tillgången 
 > till den. Enligt eMarketer uppgick de globala retail media-investeringarna till 
-> 140 miljarder dollar 2024. Det är inte en trend, det är en omfördelning av 
-> annonsbudgeten som redan pågår.
+> 140 miljarder dollar 2024. Omfördelningen av annonsbudgeten pågår redan.
 >
 > Problemet är att transparensen haltar. Många retailers kan inte redovisa 
 > inkrementalitet, bara klick. Det är inte tillräckligt för annonsörer som vill 
@@ -665,3 +1062,20 @@ löpande resonemang styckas upp i listor utan att det tillför struktur.
 | "kan beskrivas som" | "är" |
 | 💡 🚀 ✅ 📊 som dekorativa avdelare | stryk |
 | fetstilta rubriker i löptext | stryk om det inte är en faktisk rubrik |
+| "ledande", "unik", "i världsklass", "sömlös" | stryk, beskriv vad det är |
+| "dessutom / vidare / därtill" som styckeöppnare | stryk, eller behåll ett |
+| "företaget / bolaget / organisationen / aktören" om samma sak | välj ett ord |
+| "från strategi till genomförande, från insikt till handling" | lista det som faktiskt ingår |
+| — (långt tankstreck) | – , komma eller punkt |
+| – som inskott i varannan mening | komma eller punkt; matcha textprovets takt |
+| “engelska citattecken” | ”svenska” eller raka " |
+| "Varför Kultur Slår Teknik" | "Varför kultur slår teknik" |
+| "den egentliga frågan är", "i grund och botten" | säg poängen |
+| "låt oss dyka ner i", "här är vad du behöver veta" | stryk, börja med innehållet |
+| Färre möten. Bättre beslut. Punkt. | skriv ihop till en mening |
+| "X är det nya Y", "data är den nya oljan" | det konkreta påståendet |
+| "Ärligt talat?", "Här är grejen:" | stryk, säg poängen |
+| "jag säger inte att", "missförstå mig rätt" | stryk om ingen har invänt |
+| "ett frestande alternativ vore" | stryk alternativet, skriv begränsningen |
+| "troligen", "det är rimligt att anta" som fakta | skriv vad underlaget visar, eller stryk |
+| en siffra eller källa som inte finns i underlaget | fråga, eller skriv utan |

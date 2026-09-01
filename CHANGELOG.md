@@ -7,6 +7,62 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [3.0.0] - 2026-09-01
+
+### Summary
+
+Aligns the skill with [blader/humanizer](https://github.com/blader/humanizer) 2.11.2. Thirteen new pattern sections (17–29), a fact-preservation rule, a false-positive guard, sample-based voice matching, and file/embedded output modes. Swedish typography (tankstreck, citattecken, rubriker) gets its own section instead of a direct port of the English dash rule.
+
+### Added
+
+**Fact preservation (breaking change in behaviour):**
+- "Din uppgift" now has "Behåll varje påstående" and "Hitta inte på fakta": no name, number, date, quote, or source may be added unless it comes from the source text or the user. Previously the skill's own examples demonstrated inventing sources and figures.
+- Process step 10: "Har omskrivningen lagt till eller tagit bort någon uppgift, ett namn, en siffra, ett datum, ett citat, en källa eller en rangordning?"
+- Note above the worked examples that their figures and sources are illustrative.
+
+**New pattern sections (13):**
+- **17. Säljspråk** — "ledande", "unik", "i världsklass", "sömlös", "vi brinner för".
+- **18. Överanvända AI-ord** — consolidated Swedish list: stacked "dessutom/vidare/därtill", "belysa", "robust", "landskap", "samspel", "väv", etc.
+- **19. Synonymväxling och upprepade meningsstarter** — "företaget/bolaget/organisationen/aktören"; "Vi... Vi... Vi...".
+- **20. Falska spann** — "från strategi till genomförande, från insikt till handling".
+- **21. Tankstreck, citattecken och versaler** — em dash (—) is never Swedish typography; en dash (–) is correct but AI overuses it as parenthetical insertion; English “…” quotes and Title Case Headings are tells. Ranges and replikstreck are never touched.
+- **22. Låtsad djupare sanning** — "den egentliga frågan är", "i grund och botten".
+- **23. Annonsering av nästa poäng** — "låt oss dyka ner i", "här är vad du behöver veta".
+- **24. Rubrik som upprepas i första meningen.**
+- **25. Forcerade punchlines och dramatiska fragment.**
+- **26. Formelartade talesätt** — "data är den nya oljan", "X är det nya Y".
+- **27. Låtsad uppriktighet** — "Ärligt talat?", "Här är grejen:".
+- **28. Svar på invändningar ingen gjort** — "jag säger inte att", "missförstå mig rätt".
+- **29. Avfärdande av påhittade alternativ** — "ett frestande alternativ vore".
+
+**New sections:**
+- **Matcha skribentens röst** — analyse a writing sample first; the sample overrides the style rules, including dash rate.
+- **Kontrollera falska positiva** — what not to flag (single tankstreck, Swedish curly quotes, passive voice in myndighetstext/avtal, one short sentence, real disclaimers, real alternatives, quoted text, compounds) and human details to keep.
+- **Så returnerar du resultatet** — pasted-text (default), file mode (only final text written, prose only), embedded mode (final text only).
+
+**Existing patterns extended:**
+- Pattern 4: name-dropping ("uppmärksammats av DI, SvD, Breakit och Resumé") and an explicit "hitta aldrig på en källa".
+- Pattern 11: chatbot leftovers ("Vill du att jag utvecklar...", "Ska jag fortsätta?").
+- Pattern 14: speculative gap-fill ("hon växte troligen upp i...").
+
+**Quick reference table:** 19 new rows.
+
+### Changed
+
+- Version 2.0.0 → 3.0.0.
+- Intro and description rewritten around "rewrite without changing what it says".
+- "Tillför röst" is now conditional: personality for articles, posts, mail, proposals; neutral for reports, contracts, myndighetstext.
+- Pattern 1 and pattern 4 "Efter" examples no longer invent a percentage or a Kantar Sifo report; pattern 14 no longer invents an IARB forecast.
+- Example 3's final version dropped "Det är inte en trend, det är en omfördelning", which violated the skill's own pattern 9.
+- Process renumbered from 10 to 12 steps; "Utdataformat" folded into "Så returnerar du resultatet".
+
+### Not changed
+
+- Patterns 1–16 keep their numbers, so older references still hold.
+- Register guidance, the four worked examples (apart from the one line above), and the Nordic voice principles.
+
+---
+
 ## [2.0.0] - 2026-03-18
 
 ### Summary
