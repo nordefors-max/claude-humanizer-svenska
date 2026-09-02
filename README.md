@@ -18,7 +18,7 @@ The English [Humanizer skill](https://github.com/blader/humanizer/tree/main) cov
 
 ## What it covers
 
-### 10 pattern categories
+### 29 pattern categories
 
 | # | Pattern | Example trigger |
 |---|---|---|
@@ -32,6 +32,29 @@ The English [Humanizer skill](https://github.com/blader/humanizer/tree/main) cov
 | 8 | Structural AI patterns | even paragraph blocks, rule of three, formulaic closings |
 | 9 | Negative parallelism | "Det är inte längre en fråga om om, utan när" |
 | 10 | Social media tells | vague CTAs, landscape openings, generic hashtag stacks |
+| 11 | Sycophantic openers and closers | "Vilken bra fråga!", "Hoppas det hjälper!" |
+| 12 | Filler phrases | "i syfte att uppnå", "på grund av det faktum att" |
+| 13 | Excessive hedging | "det kan möjligen argumenteras att... eventuellt" |
+| 14 | Knowledge-cutoff disclaimers, speculative gap-fill | "baserat på tillgänglig information", "hon växte troligen upp..." |
+| 15 | Copula avoidance | "utgör", "representerar", "kan beskrivas som" |
+| 16 | Bullet and emoji formatting | 💡 🚀 ✅, bold-label lists in prose |
+| 17 | Sales language | "ledande", "unik", "i världsklass", "sömlös" |
+| 18 | Overused AI words | stacked "dessutom/vidare/därtill", "belysa", "robust", "landskap" |
+| 19 | Synonym cycling, repeated sentence openers | "företaget / bolaget / organisationen / aktören" |
+| 20 | False ranges | "från strategi till genomförande, från insikt till handling" |
+| 21 | Dash, quote and heading typography (Swedish rules) | "—", “66–99” quotes, Title Case Headings |
+| 22 | Fake deeper truth | "den egentliga frågan är", "i grund och botten" |
+| 23 | Announcing the next point | "låt oss dyka ner i", "här är vad du behöver veta" |
+| 24 | Heading echoed in first sentence | "## Leveranstider" / "Leveranstiden är viktig." |
+| 25 | Forced punchlines and fragments | "Färre möten. Bättre beslut. Punkt." |
+| 26 | Formulaic sayings | "data är den nya oljan", "X är det nya Y" |
+| 27 | Fake-candid openers | "Ärligt talat?", "Här är grejen:" |
+| 28 | Answering objections no one raised | "jag säger inte att", "missförstå mig rätt" |
+| 29 | Rejecting fake alternatives | "ett frestande alternativ vore" |
+
+### Fact preservation and false-positive guard
+
+The skill keeps every claim and never adds a name, number, date, quote, or source that is not in the input or supplied by the user. A separate section lists what *not* to flag (a single tankstreck, Swedish curly quotes, passive voice in myndighetstext, one short sentence for emphasis, real disclaimers and alternatives) and which human details to keep. A writing sample from the author overrides the style rules.
 
 ### Register guidance for 4 output types
 
@@ -46,7 +69,7 @@ One complete worked example per output type, each including a draft rewrite, a S
 
 ### Quick-reference substitution table
 
-20 of the most common AI-Swedish phrases with direct replacements.
+About 50 of the most common AI-Swedish phrases with direct replacements.
 
 ---
 
@@ -139,7 +162,7 @@ Removing AI patterns produces clean but often flat text. The skill includes acti
 - **Social media scope** is currently limited to LinkedIn and equivalent professional channels. Consumer-facing platforms (Instagram, TikTok) have different conventions not covered here.
 - **Vocabulary evolves.** AI vocabulary shifts with model updates. The trigger word lists reflect patterns from GPT-4 and GPT-4o era output (2023–2025). New patterns may emerge that are not yet documented.
 - **No academic writing.** Legal, scientific, and academic Swedish have different formality conventions. Applying this skill to those genres may overcorrect.
-- **The skill does not source-check.** When the before/after examples in Section 4 (vague attribution) suggest replacing vague claims with specific sources, that is illustrative. The user is responsible for verifying any statistics or citations.
+- **The skill does not source-check.** Since 3.0.0 it must not invent a source or figure; the figures in the worked examples are illustrative. The user is still responsible for verifying any statistic or citation they supply.
 
 ---
 
@@ -151,5 +174,5 @@ See [`CHANGELOG.md`](./CHANGELOG.md).
 
 ## Related
 
-- [Humanizer (English)](https://github.com/anthropics/claude-skills/tree/main/humanizer) – the English-language skill this is based on
+- [Humanizer (English)](https://github.com/blader/humanizer) – the English-language skill this is based on; pattern list tracks its version 2.11.2
 - [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) – the foundational reference for pattern documentation
