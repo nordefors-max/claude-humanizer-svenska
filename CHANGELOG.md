@@ -7,6 +7,63 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [3.1.0] - 2026-11-12
+
+### Summary
+
+Rules checked against TT-språket, and a frequency test against Språkbanken's Korp corpora.
+
+### Added
+
+- **A4: Words that say more than you mean.** Förväntas/väntas, tack vare/på grund av, bör/ska, procent/procentenheter, mindre/färre, ju ... desto, chans/risk.
+- **False friends table.** Teknologi, ledarskap, massiv, familjär med, eventuellt, realisera, biljon, provisorisk.
+- **English grammar imports.** Unnecessary en/ett, English plural -s on loanwords.
+- **Number rules.** One to twelve in words in running text, complete ranges (500–600 kr), plural after decimals, billion = miljard.
+- **B8: Sentence length.**
+- **F: Frequency test.** Korp query URL, a threshold for when to replace a phrase, three measured examples and known limitations.
+- **Report sentence example** and a **Sources** section.
+- `WebFetch` added to `allowed-tools` for the frequency test.
+
+### Changed
+
+- % and kr are the default, with "procent" and "kronor" written out in speaker notes.
+- The dash ban is now labelled a deliberate choice, since Språkrådet and TT allow sparing use.
+- "sa", not "sade", stated explicitly.
+- More entries in the A1 and A2 tables (avge, belägenhet, starta upp, maila, outsourca, pressrelease and others).
+- A "not purist" note: agenda, team and design are fine in business Swedish.
+- The final checklist is now eight points.
+
+---
+
+## [3.0.0] - 2026-10-30
+
+### Summary
+
+Full rewrite. The v2 examples broke the skill's own rules ("inte X, utan Y", staged one-liners) and contained invented statistics, which taught the model the patterns it was meant to remove. v3 is about half the length.
+
+### Added
+
+- **Three priority rules:** change form, not content; never invent details; match the writer's voice. Missing facts are marked in brackets.
+- **Modes:** rewrite (default, short change note), review and silent final check.
+- **Bureaucratic vocabulary table** (gällande, erhålla, tillhandahålla, huruvida and others).
+- **Typography section** based on Språkrådet: dashes, Oxford comma, quotation marks, space before %, numbers, dates, capitalisation.
+- **Email and presentation guidance:** subject lines, greetings, du/ni, headline as message, one point per slide.
+- New examples for email and slides with no invented facts.
+
+### Changed
+
+- Description in Swedish and covering emails and presentations.
+- Passive voice: natural s-passive is allowed; only passives that hide who did something are flagged.
+- "Utgör" kept when it means a share.
+- LinkedIn: 3–5 hashtags.
+
+### Removed
+
+- The draft, self-audit and final output steps on every run.
+- Rules that changed meaning ("verkar som" → "är") or were translated from English ("-ing phrases").
+
+---
+
 ## [2.0.0] - 2026-03-18
 
 ### Summary
