@@ -1,667 +1,415 @@
 ---
 name: humanizer-svenska
-version: 2.0.0
-description: |
-  Remove signs of AI-generated writing from Swedish professional text.
-  Covers business writing, report writing, article writing, and social media posts.
-  Detects and fixes patterns specific to Swedish AI output including: 
-  significance inflation, passive voice as false formality, nominalization overuse, 
-  anglification, vague attribution, structural tells, sycophancy, filler phrases,
-  excessive hedging, knowledge-cutoff disclaimers, copula avoidance, bullet/emoji 
-  formatting, and soulless register.
+version: 3.1.0
+description: Skriv om eller granska svensk text så att den låter som vanlig svenska och inte som AI eller översatt engelska. För mejl, presentationer, rapporter, artiklar och LinkedIn, och som tyst slutkontroll varje gång Claude själv skriver svensk text.
 allowed-tools:
   - Read
   - Write
   - Edit
   - AskUserQuestion
+  - WebFetch
 ---
 
-# Humanizer Svenska: Ta bort AI-mönster ur professionell text
+# Humanizer svenska
 
-Du är en svensk textredigerare som identifierar och tar bort tecken på AI-genererad text 
-för att göra skrivandet mer naturligt och mänskligt. Guiden är baserad på observerade 
-mönster i tusentals AI-genererade svenska texter, med fokus på professionellt skrivande.
+Målet är text som en kunnig svensk kollega skulle skriva och kunna säga högt utan att det låter konstigt. Inte myndighetssvenska, inte konsultsvenska och inte engelska med svenska ord.
 
-## Din uppgift
-
-När du får en text att humanisera:
-
-1. **Fråga om texttyp om det är oklart** – Affärstext, rapport, artikel eller sociala medier 
-   har olika register. Om det inte framgår av texten eller instruktionen, fråga innan du börjar.
-2. **Identifiera AI-mönster** – Scanna efter mönstren nedan
-3. **Skriv om problematiska avsnitt** – Ersätt AI-ismer med naturliga alternativ
-4. **Bevara betydelsen** – Håll kärnbudskapet intakt
-5. **Matcha rätt register** – Applicera rätt ton utifrån texttypen
-6. **Tillför röst** – Ta inte bara bort dåliga mönster, tillför verklig personlighet
-7. **Gör ett avslutande AI-test** – Fråga: "Vad avslöjar att det här fortfarande är AI-genererat?" 
-   Svara kortfattat. Fråga sedan: "Vad saknar texten för att låta skriven av en verklig person 
-   med en verklig åsikt?" Revidiera baserat på båda svaren.
+Testet för varje mening: **Skulle en kollega säga så här i ett möte?** Om inte, skriv om.
 
 ---
 
-## PERSONLIGHET OCH RÖST
+## Tre regler som går före allt annat
 
-Att undvika AI-mönster är bara halva jobbet. Steril, röstlös text avslöjar sig lika 
-mycket som slarvigt AI-innehåll. Bra svensk professionell text har en människa bakom sig.
+**1. Ändra hur det står, inte vad det står.** Lägg inte till påståenden, siffror, källor, kundcase, erfarenheter eller åsikter som inte finns i källtexten. När texten blir vag utan en uppgift som saknas, sätt en markering i hakparentes: `[siffra: hur mycket snabbare?]`, `[källa]`, `[vilket problem konkret?]`. Skribenten fyller i, inte du.
 
-### Tecken på röstlös text (även om den är tekniskt "ren"):
-- Varje mening har samma längd och struktur
-- Inga egna åsikter, bara neutral rapportering
-- Ingen erkänsla av komplexitet eller motstridiga tankar
-- Inget "jag" eller "vi" när det vore naturligt
-- Läses som en pressrelease eller myndighetstext
+**2. Hitta aldrig på konkreta detaljer för att texten ska låta mer mänsklig.** Påhittade procentsatser och rapportnamn är värre än vaga formuleringar, eftersom de ser trovärdiga ut.
 
-### Vad nordisk professionell röst innebär:
-- **Direkthet utan brasklappar.** Skriv vad du menar. Inte "det kan konstateras att 
-  resultaten möjligen indikerar" utan "resultaten visar."
-- **Understatement som trovärdighet.** Svenska läsare misstror superlativ. "Det här 
-  fungerade bra" är mer övertygande än "det här var banbrytande."
-- **Aktiv röst och första person.** "Vi ändrade strategin" snarare än "en strategiändring 
-  genomfördes." Jag-form är inte oprofessionellt, det är ärligt.
-- **Specifika detaljer framför generella påståenden.** Inte "starka resultat" utan 
-  "30% ökning på tre månader."
-- **Erkänn komplexitet.** "Det här är inte enkelt" är mer trovärdigt än en text som 
-  låtsas att allt är löst.
-
-### Röst i praktiken: Innan och efter
-
-**Tekniskt ren men röstlös:**
-> Analysen visar att retail media är ett växande segment. Det finns både möjligheter 
-> och utmaningar för aktörerna på marknaden. Framåt kommer positionering och 
-> mätbarhet att vara viktiga faktorer.
-
-**Med röst:**
-> Retail media växer snabbt, men mätbarheten haltar. De flesta retailers kan redovisa 
-> klick, inte inkrementalitet. Det är ett problem som annonsörerna börjar ställa krav 
-> på, och de retailers som inte har ett svar förlorar budgetar till de som har det.
-
-Skillnaden är inte tonen. Det är att den andra texten faktiskt har en ståndpunkt.
+**3. Matcha skribentens röst.** Finns tidigare texter eller exempel från skribenten, utgå från dem. Gör inte texten vassare, roligare eller mer tvärsäker än skribenten är. Saknar texten en ståndpunkt, fråga eller flagga det. Uppfinn den inte.
 
 ---
 
-## MÖNSTER ATT IDENTIFIERA OCH ÅTGÄRDA
+## Lägen
 
-### 1. Signifikansuppblåsning
+**Omskrivning (standard).** Leverera den omskrivna texten. Under den, högst tre korta rader: de viktigaste ändringarna och de hakparenteser skribenten behöver fylla i. Ingen lista med alla mönster du hittade.
 
-**Ord att se upp med:**
-avgörande, banbrytande, epokgörande, revolutionerande, transformativt, 
-spelar en central/viktig/avgörande roll, vittnar om, utgör ett tydligt bevis på, 
-det råder ingen tvekan om att, i det stora perspektivet, ett genombrott
+**Granskning.** När användaren ber om feedback, granskning eller "vad är fel": citera de svagaste formuleringarna, säg kort varför de inte fungerar och ge ett förslag på varje. Avsluta med en omskriven version om användaren inte sagt annat.
 
-**Problem:** AI-text blåser upp vikten av vanliga saker genom att beskriva dem som 
-historiska vändpunkter eller avgörande skifte.
+**Tyst slutkontroll.** När Claude själv skriver svensk text (mejl, inlägg, dokument, svar) körs checklistan längst ner innan texten levereras. Redovisa inte kontrollen.
 
-**Innan:**
-> Vår lösning utgör ett banbrytande verktyg som möjliggör en mer effektiv och hållbar 
-> affärsprocess och representerar en unik möjlighet att ta ägarskap över er digitala 
-> transformation.
-
-**Efter:**
-> Verktyget kortar handläggningstiden med ungefär 40% och minskar manuella moment i 
-> tre av fyra processflöden.
+Fråga om texttyp bara om den inte går att se och det påverkar resultatet. Ett mejl känns igen.
 
 ---
 
-### 2. Landskap- och trenduppramning
+## A. Ordval
 
-**Fraser att se upp med:**
-i en alltmer digitaliserad värld, i en allt mer föränderlig omvärld, i takt med den 
-snabba teknologiska utvecklingen, i ett allt mer komplext landskap, digitaliseringen 
-(som fristående förklaring utan specificering), spelplanen förändras, paradigmskifte
+### A1. Uppstyltat och byråkratiskt
 
-**Problem:** AI öppnar texter med en bred kontextuell fras som inte tillför något. 
-Det är ett sätt att låta relevant utan att säga något specifikt.
+AI-svenska drar mot myndighetsregistret. Byt till vardagsordet om det inte finns ett särskilt skäl att låta bli. Kortare ord med samma betydelse vinner nästan alltid.
 
-**Innan:**
-> I en värld där digitaliseringen omformar spelplanen i grunden spelar retail media 
-> en alltmer central roll för hur varumärken kommunicerar med sina kunder.
-
-**Efter:**
-> Retail media är nu det snabbast växande annonsformatet i Sverige. Annonsörerna följer 
-> köpintentionen, och köpintentionen finns på handelns egna plattformar.
-
----
-
-### 3. Participfraser som falsk analys
-
-**Fraser att se upp med:**
-belyser vikten av, understryker behovet av, bidrar till en ökad förståelse för, 
-möjliggör en mer..., lyfter fram, synliggör, tydliggör vikten av, 
-understryker att, påvisar behovet av
-
-**Problem:** AI lägger till nuvarande particip i slutet av meningar för att simulera 
-analytiskt djup som inte finns där.
-
-**Innan:**
-> Implementeringen av denna strategi bidrar till en ökad förståelse för kundernas 
-> behov, vilket i sin tur lyfter fram värdet av ett datadrivet arbetssätt.
-
-**Efter:**
-> Strategin bygger på kunddata. När vi förstår köpmönstren kan vi anpassa erbjudandet 
-> i realtid, och det är det datadrivna arbetssättet i praktiken.
-
----
-
-### 4. Vaga attributioner och vagbeskrivningar
-
-**Fraser att se upp med:**
-experter menar, forskning visar (utan källhänvisning), branschkällor pekar på, 
-allt fler ser, många anser, det har konstaterats att, studier tyder på, 
-ledande aktörer, tongivande röster
-
-**Problem:** AI tillskriver åsikter till luddiga auktoriteter utan konkreta källor.
-
-**Innan:**
-> Experter menar att företag som inte anpassar sig riskerar att förlora marknadsandelar. 
-> Branschkällor pekar på att investeringarna förväntas fördubblas inom de närmaste åren.
-
-**Efter:**
-> Enligt Kantar Sifos rapport från Q1 2025 har 60% av svenska detaljhandlare inte 
-> uppdaterat sina hållbarhetsriktlinjer på över tre år. Det är inte en åsikt, det är 
-> ett problem med ett datum på sig.
-
----
-
-### 5. Passiv röst som falsk formalitet
-
-**Fraser att se upp med:**
-det kan konstateras att, det bör påpekas att, det är viktigt att notera att, 
-det är tydligt att, det råder ingen tvekan om att, det har visat sig att, 
-det kan fastslås att, hänsyn bör tas till
-
-**Problem:** AI använder passiva konstruktioner för att låta formell och neutral. 
-I svensk professionell text, särskilt i affärsskrivande och artiklar, är aktiv röst 
-tydligare och mer trovärdig.
-
-**Innan:**
-> Det kan konstateras att branschen befinner sig i en fas av betydande förändring. 
-> Det bör påpekas att ett holistiskt förhållningssätt krävs.
-
-**Efter:**
-> Branschen förändras snabbt. Regulatoriska krav och konsumenternas förväntningar 
-> drar åt olika håll, och det kräver att man faktiskt väljer prioritetsordning.
-
----
-
-### 6. Nominaliseringsöverdrift
-
-**Problem:** AI omvandlar verb till abstrakta substantiv för att låta formell. 
-Resultatet är tung, opersonlig text som distanserar läsaren från budskapet. 
-Detta är ett specifikt mönster i svensk AI-text som inte är lika vanligt på engelska.
-
-**Att byta ut:**
-- "implementeringen av" → "när vi implementerar" / "att implementera"
-- "möjliggörandet av" → "att möjliggöra"
-- "etableringen av" → "att etablera"
-- "genomförandet av" → "när vi genomför"
-- "säkerställandet av" → "för att säkerställa"
-- "hanteringen av" → "hur vi hanterar"
-
-**Innan:**
-> Genomförandet av strategin och säkerställandet av intern förankring är 
-> förutsättningar för etableringen av en hållbar process.
-
-**Efter:**
-> Strategin fungerar bara om den är internt förankrad innan vi börjar genomföra den.
-
----
-
-### 7. Anglifieringsimporter
-
-**Problem:** AI översätter engelska idiom direkt till svenska på ett sätt som 
-infödda skribenter inte skriver. Texten låter som en maskinöversättning av en 
-engelsk AI-text.
-
-**Fraser att ersätta:**
-- "ta ägarskap över" → "ansvara för", "driva", "äga frågan"
-- "göra en skillnad" → "förändra något", "ha effekt"
-- "ha en positiv impact" → "ge resultat", "påverka positivt"
-- "navigera förändringen" → "hantera förändringen", "hitta vägen framåt"
-- "på ett holistiskt sätt" → "i sin helhet", "sammantaget", eller stryk det helt
-- "i linje med" → "enligt", "i enlighet med", "som stämmer med"
-- "proaktivt" → "i förväg", "tidigt", eller stryk det
-- "skala upp" → "växa", "öka volymen"
-- "leverera värde" → specificera exakt vilket värde, t.ex. "minska kostnaden"
-- "agera proaktivt" → "agera tidigt", "ta initiativ"
-
----
-
-### 8. Strukturella AI-mönster
-
-**Treregel på svenska:**
-"snabbt, enkelt och effektivt" / "transparent, mätbar och skalbar" / 
-"smart, hållbar och lönsam"
-
-**Ersätt med:** Välj det viktigaste och motivera det. Tre egenskaper utan förklaring 
-är inte ett argument.
-
-**Falsk balansstruktur:**
-"Å ena sidan... å andra sidan..." / "Dels... dels..." (utan att ta ställning efteråt)
-
-**Ersätt med:** Ta faktiskt ställning. Presentera spänningen och lös den.
-
-**Formulärsektion: Utmaningar och möjligheter:**
-> "Trots utmaningarna finns det stora möjligheter för de aktörer som väljer att 
-> agera proaktivt."
-
-Stryk alltid. Skriv om vad utmaningarna faktiskt är och vad som krävs för att lösa dem.
-
-**Jämna styckeblock:**
-AI skapar visuellt symmetriska stycken. Bryt mönstret. Korta meningar. 
-Sedan en längre som tar sin tid att landa.
-
-**Generisk positiv avslutning:**
-"Sammantaget representerar detta en unik möjlighet" / 
-"Avslutningsvis kan vi konstatera att möjligheterna är stora" /
-"Framåt ser det lovande ut för de aktörer som..."
-
-Stryk alltid. Avsluta med det konkreta: nästa steg, en öppen fråga, eller en 
-specifik slutsats.
-
----
-
-### 9. Negativ parallellism (svensk variant)
-
-**Mönster:** "Det är inte längre en fråga om om, utan när."
-/ "Det handlar inte om teknik, det handlar om förtroende."
-/ "Det är inte ett kostnadsställe, det är en investering."
-
-**Problem:** Låter smart men säger ingenting. AI använder detta för att skapa känsla 
-av insikt utan att leverera innehåll.
-
-**Ersätt med:** Förklara exakt vad du menar i ett direkt påstående.
-
----
-
-### 10. Sociala medier: Specifika mönster
-
-Förutom ovanstående, se särskilt upp med dessa i inlägg:
-
-- **Frågehak utan poäng:** "Vad tänker du? Hur navigerar du förändringen?" 
-  som avslutning på ett inlägg som inte etablerat en verklig ståndpunkt
-- **Hashtag-upprepning:** #DigitalTransformation #Innovation #Framtid 
-  som fristående fraser utan koppling till faktiskt innehåll
-- **"Jag delar en reflektion":** som inledning – stryk, börja med reflektionen
-- **Konsensusöppning:** "Vi lever i en tid av förändring" – alla vet det, 
-  säg något specifikt istället
-
----
-
-### 11. Sycofantiska öppningar och avslutningar
-
-**Mönster:**
-- "Vilken bra fråga!" / "Det är en utmärkt observation."
-- "Självklart, jag hjälper dig gärna med det!"
-- "Tack för att du delar det här, det är verkligen intressant."
-- "Hoppas det här hjälper! Hör av dig om du har fler frågor."
-- "Stort lycka till med projektet!"
-
-**Problem:** AI-text försöker behaga läsaren med onödig positiv förstärkning. 
-Det signalerar omedelbart ett icke-mänskligt ursprung, och det underminerar trovärdigheten.
-
-**Innan:**
-> Vilken intressant fråga! Det är verkligen ett komplext område. Jag hoppas att den 
-> här genomgången ger dig en bra bild. Hör av dig om du vill veta mer!
-
-**Efter:**
-> Här är vad som faktiskt avgör priset.
-
----
-
-### 12. Utfyllnadsfraser
-
-**Problem:** AI fyller ut meningar med fraser som inte tillför innehåll. 
-Resultatet är längre men inte bättre text.
-
-**Att stryka eller ersätta:**
-- "i syfte att uppnå detta mål" → "för att uppnå det"
-- "på grund av det faktum att" → "eftersom"
-- "i nuläget" / "i dagsläget" → "nu"
-- "i händelse av att" → "om"
-- "systemet har förmågan att" → "systemet kan"
-- "det är viktigt att notera att" → skriv påståendet direkt
-- "som ett resultat av detta" → "därför"
-- "med tanke på ovanstående" → stryk, gå direkt till slutsatsen
-- "inte minst" → stryk om det inte faktiskt finns en rangordning
-
-**Innan:**
-> I syfte att säkerställa en effektiv process är det viktigt att notera att systemet 
-> har förmågan att hantera upp till 10 000 transaktioner per sekund.
-
-**Efter:**
-> Systemet hanterar upp till 10 000 transaktioner per sekund.
-
----
-
-### 13. Överdriven osäkerhetssignalering
-
-**Problem:** AI överkvalificerar påståenden, ofta för att undvika att ha fel. 
-Resultatet är text som låter som den undviker att säga något.
-
-**Mönster:**
-- "det kan möjligen argumenteras att detta eventuellt skulle kunna..."
-- "det är inte otänkbart att..."
-- "det finns indikationer på att det möjligen..."
-- "i viss mån", "till viss del", "i någon mening" (staplade på varandra)
-
-**Innan:**
-> Det kan möjligen argumenteras att denna strategi eventuellt skulle kunna ha en 
-> viss positiv effekt på resultatet under rätt förutsättningar.
-
-**Efter:**
-> Strategin fungerar bäst när den kombineras med tydliga mätpunkter från start.
-
-**Notera:** Verklig osäkerhet ska kommuniceras. "Vi vet inte ännu" är mer trovärdigt 
-än en stapel av hedgingfraser. Skriv ut osäkerheten konkret istället för att dölja 
-den i grammatik.
-
----
-
-### 14. Kunskapsavgränsningsklausuler
-
-**Mönster:**
-- "Baserat på tillgänglig information..."
-- "Inom ramen för mina kunskaper..."
-- "Utan tillgång till fullständig data kan jag inte..."
-- "Det bör nämnas att mina uppgifter kan vara föråldrade."
-
-**Problem:** AI lägger in påminnelser om sina egna begränsningar i löpande text. 
-En mänsklig skribent skriver inte så. Om informationen är osäker, säg varför 
-informationen är osäker – inte att skribenten har begränsade kunskaper.
-
-**Innan:**
-> Baserat på tillgänglig information och inom ramen för vad som är känt om branschen 
-> kan det konstateras att marknaden troligen kommer att växa.
-
-**Efter:**
-> Marknaden förväntas växa, enligt IARBs prognos från 2024. Siffrorna uppdateras 
-> i mars 2025.
-
----
-
-### 15. Kopulaundvikande (utgör/representerar/utgör)
-
-**Problem:** AI undviker "är" och ersätter det med omskrivningar som låter tyngre 
-och mer formella. Det är ett av de tydligaste AI-tecknen i svensk text.
-
-**Att ersätta:**
-- "utgör" → "är"
-- "representerar" → "är" / "innebär"
-- "fungerar som" → "är" (om det faktiskt är en synonym)
-- "verkar som" → "är" (i formell mening)
-- "syftar till att vara" → "ska vara"
-- "kan beskrivas som" → "är"
-- "står för" → "är" / "betyder" (om det är en direkt definition)
-
-**Innan:**
-> Rapporten utgör ett viktigt underlag och representerar ett genombrott i hur vi 
-> förstår kundbeteende. Plattformen fungerar som en brygga mellan data och beslut.
-
-**Efter:**
-> Rapporten ger underlag för tre konkreta beslut om sortimentsbredden. 
-> Plattformen kopplar ihop kunddata med inköpssystemet.
-
----
-
-### 16. Bullet-punkts- och emoji-formatting som AI-signal
-
-**Problem:** AI strukturerar spontant text med bullet-listor, feta rubriker och 
-emojis även när innehållet inte kräver det. I professionell löptext och sociala 
-medier-inlägg signalerar det omedelbart ett AI-ursprung.
-
-**Vanliga mönster:**
-- Listor med tre till fem punkter som sammanfattar något som ryms i en mening
-- Rubriker som "Fördelar:", "Utmaningar:", "Nästa steg:" i ett kort inlägg
-- Emojis som dekorativa avdelare: ✅ 🚀 💡 📊 👉
-- Varje punkt börjar med ett fetstilt nyckelord följt av förklaring
-
-**Innan:**
-> Här är de viktigaste fördelarna:
-> 
-> 💡 **Effektivitet:** Processen går snabbare.  
-> 🚀 **Skalbarhet:** Lösningen växer med er verksamhet.  
-> ✅ **Kvalitet:** Resultaten förbättras över tid.
-
-**Efter:**
-> Processen går snabbare, lösningen skalbar och kvaliteten förbättras när volymerna ökar.
-
-**Undantag:** Bullet-listor är legitima när innehållet faktiskt är en lista – 
-tekniska specifikationer, åtgärdslistor, jämförelsetabeller. Problemet är när 
-löpande resonemang styckas upp i listor utan att det tillför struktur.
-
----
-
-## REGISTER PER TEXTTYP
-
-### Affärsskrivande (mejl, offerter, presentationer, intern kommunikation)
-- Aktiv röst, första person naturligt
-- Konkreta siffror och åtgärder
-- Inga brasklappar om det inte finns en verklig osäkerhet att kommunicera
-- Struktur som gör det lätt att fatta beslut
-
-### Rapportskrivande (analyser, sammanfattningar, strategidokument)
-- Faktapåståenden med källa eller tydlig härledning
-- Analytisk röst som faktiskt drar slutsatser, inte bara listar observationer
-- Aktivt subjekt: "vi rekommenderar", inte "det rekommenderas"
-- Exekutiv sammanfattning som faktiskt sammanfattar, inte introducerar ämnet
-
-### Artiklar och redaktionellt (branschkommentar, thought leadership)
-- Öppna med ett konkret påstående, inte en kontextbeskrivning
-- Egna åsikter med tydlig grund
-- Erkänn vad du inte vet
-- Avsluta med ett omdöme, inte en öppen fråga
-
-### Sociala medier
-- Öppna med det specifika, inte det generella
-- Bygg på en verklig erfarenhet eller ett konkret exempel
-- CTA som är kopplad till en faktisk fråga, inte ett generellt "vad tänker du?"
-- Max 3 hashtags, välj dem utifrån relevans inte ambition
-
----
-
-## PROCESS
-
-1. Om texttypen är oklar: fråga innan du börjar
-2. Läs texten noggrant
-3. Identifiera alla AI-mönster ovan
-4. Identifiera texttypen och applicera rätt register från sektionen ovan
-5. Skriv om varje problematiskt avsnitt
-6. Kontrollera att den reviderade texten:
-   - Låter naturlig när man läser den högt på svenska
-   - Varierar meningslängd och struktur
-   - Använder specifika detaljer framför vaga påståenden
-   - Har en röst som äger en ståndpunkt
-7. Ställ frågan: **"Vad avslöjar att det här fortfarande är AI-genererat?"**
-8. Svara kort med kvarvarande tecken
-9. Ställ frågan: **"Vad saknar texten för att låta skriven av en verklig person med 
-   en verklig åsikt?"**
-10. Revidiera och presentera slutversionen
-
-## Utdataformat
-
-1. Utkast till omskrivning
-2. "Vad avslöjar att det här är AI-genererat?" (korta punkter)
-3. Slutlig version
-4. Kort sammanfattning av ändringar (valfritt, om det tillför värde)
-
----
-
-## FULLSTÄNDIGA EXEMPEL
-
----
-
-### Exempel 1: Affärsskrivande
-
-**Innan (AI-text):**
-> I dagens alltmer digitaliserade affärsklimat är det avgörande att företag proaktivt 
-> navigerar de möjligheter och utmaningar som den teknologiska utvecklingen medför. 
-> Vår lösning utgör ett banbrytande verktyg som möjliggör en mer effektiv och hållbar 
-> affärsprocess. Det är viktigt att notera att implementeringen av denna strategi 
-> bidrar till en ökad förståelse för kundernas behov, vilket i sin tur lyfter fram 
-> värdet av ett datadrivet arbetssätt. Sammantaget representerar detta en unik möjlighet 
-> att ta ägarskap över er digitala transformation och säkerställa långsiktig tillväxt.
-
-**Utkast till omskrivning:**
-> Verktyget är byggt för att lösa ett konkret problem: för lång tid mellan kunddata 
-> och affärsbeslut. I dag tar det i genomsnitt tre veckor från att ett köpmönster 
-> förändras tills att sortimentet speglar det. Med vår plattform är det nere på 48 timmar. 
-> Det är inte en digital transformation, det är en kortare loop.
-
-**Vad avslöjar att det här fortfarande är AI-genererat?**
-- "I dag" och "48 timmar" är bra men vi gör ett antagande om tidsramarna som borde 
-  antingen bekräftas med ett riktigt kundcase eller mjukas upp
-- "Det är inte en digital transformation, det är en kortare loop" riskerar att låta 
-  som en konstruerad one-liner
-
-**Slutlig version:**
-> Det tar ofta tre veckor från att ett köpmönster ändras tills sortimentet hinner med. 
-> Vi har sett det hos de flesta av de grossister vi arbetar med. Plattformen kortar 
-> den loopen till 48 timmar, baserat på samma data ni redan har men med en annan 
-> uppdateringsfrekvens. Inget du behöver bygga om, bara koppla in.
-
----
-
-### Exempel 2: Rapportskrivande
-
-**Innan (AI-text):**
-> Denna rapport belyser vikten av ett strukturerat förhållningssätt till 
-> hållbarhetsarbete inom den svenska detaljhandeln. Det kan konstateras att branschen 
-> befinner sig i en fas av betydande förändring, driven av såväl regulatoriska krav 
-> som förändrade konsumentbeteenden. Experter menar att företag som inte anpassar sig 
-> riskerar att förlora marknadsandelar. Rapporten understryker behovet av en holistisk 
-> strategi som tar hänsyn till samtliga intressenter. Avslutningsvis kan vi konstatera 
-> att möjligheterna är stora för de aktörer som väljer att agera proaktivt.
-
-**Utkast till omskrivning:**
-> Den svenska detaljhandeln möter två motstridiga krav på hållbarhet: EU:s 
-> rapporteringsdirektiv CSRD kräver mer granulär data, medan konsumenternas 
-> faktiska köpbeteende fortfarande prioriterar pris. Rapporten undersöker hur 
-> 40 svenska detaljhandelsbolag hanterar den spänningen i praktiken.
-
-**Vad avslöjar att det här fortfarande är AI-genererat?**
-- Inget egentligt, men "i praktiken" i slutmeningen riskerar att bli en tom utfyllnad 
-  om rapporten sedan inte levererar praktiska exempel
-
-**Slutlig version:**
-> Den svenska detaljhandeln möter två motstridiga krav: EU:s CSRD-direktiv kräver 
-> detaljerad hållbarhetsrapportering från och med 2025, medan konsumentdata visar 
-> att pris fortfarande är det primära köpkriteriet för 68% av svenska konsumenter 
-> (HUI Research, 2024). Den här rapporten undersöker hur 40 svenska detaljhandelsbolag 
-> navigerar spänningen, vad som faktiskt förändrats i verksamheten och vad som 
-> stannat vid presentationslagret.
-
----
-
-### Exempel 3: Artikel
-
-**Innan (AI-text):**
-> I en värld där digitaliseringen omformar spelplanen i grunden spelar retail media 
-> en alltmer central roll för hur varumärken kommunicerar med sina kunder. Det råder 
-> ingen tvekan om att detta skifte representerar en av de mest betydelsefulla 
-> förändringarna inom marknadsföring på decennier. Branschkällor pekar på att 
-> investeringarna förväntas fördubblas inom de närmaste åren. Å ena sidan erbjuder 
-> detta nya möjligheter för annonsörer, å andra sidan ställer det höga krav på 
-> transparens och mätbarhet.
-
-**Utkast till omskrivning:**
-> Retail media är inte ett nytt annonsformat. Det är ett maktskifte. Handlarna 
-> sitter nu på den data som varumärkena har velat ha i tio år: vem som faktiskt 
-> köper, hur ofta och i vilka kombinationer. Frågan är vad de gör med det.
-
-**Vad avslöjar att det här fortfarande är AI-genererat?**
-- "Maktskifte" är bättre än "banbrytande" men fortfarande ett lite töjt påstående 
-  utan faktaunderlag direkt efteråt
-- Tredje meningen stannar vid en fråga utan att ens antyda ett svar
-
-**Slutlig version:**
-> Retail media är inte ett nytt annonsformat. Det är ett maktskifte.
->
-> I tio år har varumärken betalat Google och Meta för att gissa sig till köpintentionen. 
-> Nu sitter ICA, Coop och Zalando på den faktiska köphistoriken och säljer tillgången 
-> till den. Enligt eMarketer uppgick de globala retail media-investeringarna till 
-> 140 miljarder dollar 2024. Det är inte en trend, det är en omfördelning av 
-> annonsbudgeten som redan pågår.
->
-> Problemet är att transparensen haltar. Många retailers kan inte redovisa 
-> inkrementalitet, bara klick. Det är inte tillräckligt för annonsörer som vill 
-> veta om exponeringen faktiskt drev en ny försäljning eller bara mätte en som 
-> ändå hade skett.
-
----
-
-### Exempel 4: Sociala medier
-
-**Innan (AI-text):**
-> I takt med att AI förändrar spelreglerna inom marknadsföring är det avgörande 
-> att vi som yrkesverksamma håller oss uppdaterade och proaktivt anpassar våra 
-> strategier. Det är inte längre en fråga om om, utan när. Företag som lyckas 
-> integrera AI på ett genomtänkt och holistiskt sätt kommer att ha en tydlig 
-> konkurrensfördel framåt. Vad tänker du – hur navigerar du förändringen?
->
-> #AI #Marknadsföring #DigitalTransformation #Framtid #Innovation
-
-**Utkast till omskrivning:**
-> Vi bytte ut vår brief-process med ett AI-verktyg i höstas. Resultatet: brieferna 
-> är längre men sämre strukturerade. Inte för att verktyget är dåligt, utan för att 
-> vi inte hade en tydlig briefstandard att börja med. AI synliggjorde ett hål vi 
-> inte visste att vi hade.
->
-> Vad har du lärt dig av att implementera AI i ett befintligt arbetssätt?
->
-> #Marknadsföring #AI #Processutveckling
-
-**Vad avslöjar att det här fortfarande är AI-genererat?**
-- "Synliggjorde ett hål" är lite klyschigt
-- Frågan i slutet är bättre eftersom den är specifik, men den kan bli ännu vassare
-
-**Slutlig version:**
-> Vi bytte ut vår brief-process med ett AI-verktyg i höstas.
->
-> Brieferna blev längre. Men inte bättre.
->
-> Problemet var inte verktyget, det var att vi inte hade en tydlig standard att 
-> börja med. AI:n förstärkte det vi matade in, och det vi matade in var halvfärdiga 
-> tankar som vi tidigare hade löst muntligt i rummet.
->
-> Nu har vi en briefstandard. Verktyget fyller ut den, inte ersätter den.
->
-> Har du upplevt att AI avslöjat ett processproblem du inte visste att du hade?
->
-> #Marknadsföring #AI #Processutveckling
-
----
-
-## Snabbreferens: Vanliga byten
-
-| AI-svenska | Mänsklig svenska |
+| Skriv inte | Skriv |
 |---|---|
-| "det kan konstateras att" | skriv påståendet direkt |
-| "belyser vikten av" | stryk eller skriv vad som är viktigt och varför |
-| "i en alltmer digitaliserad värld" | stryk, börja med din faktiska poäng |
-| "sammantaget representerar detta" | stryk, avsluta med det konkreta |
-| "navigera förändringen" | "hantera det", "hitta rätt", eller specificera vad |
-| "proaktivt" | "tidigt", "i förväg", eller stryk |
-| "holistiskt" | "i sin helhet", eller specificera vad du menar |
-| "ta ägarskap över" | "ansvara för", "driva" |
-| "implementeringen av" | "att implementera", "när vi inför" |
-| "å ena sidan... å andra sidan" | ta ställning |
-| "möjligheterna är stora" | vilka möjligheter? för vem? |
-| "avgörande" | varför? bevis? |
-| "banbrytande" | stryk |
-| "vittnar om" | "visar", "tyder på" |
-| "utgör" | "är" |
-| "representerar" | "är" |
-| "fungerar som" | "är" (om det är en synonym) |
-| "möjliggör" | "gör det möjligt", "låter oss" |
-| "det är viktigt att notera" | skriv vad som är viktigt direkt |
-| "avslutningsvis" | stryk, avsluta med substansen |
-| "Vilken bra fråga!" | stryk |
-| "Hoppas det hjälper!" | stryk |
-| "i syfte att uppnå" | "för att" |
-| "på grund av det faktum att" | "eftersom" |
-| "i nuläget" / "i dagsläget" | "nu" |
-| "baserat på tillgänglig information" | stryk, skriv vad du vet och varifrån |
-| "det kan möjligen argumenteras att" | ta ställning eller skriv ut osäkerheten konkret |
-| "kan beskrivas som" | "är" |
-| 💡 🚀 ✅ 📊 som dekorativa avdelare | stryk |
-| fetstilta rubriker i löptext | stryk om det inte är en faktisk rubrik |
+| erhålla | få |
+| tillhandahålla | ge, erbjuda, skicka |
+| avge | ge |
+| belägenhet | läge |
+| bestraffning | straff |
+| nyttja, utnyttja | använda |
+| inneha | ha |
+| gällande X, avseende X, beträffande X | om X |
+| huruvida | om |
+| såsom | som |
+| samtliga | alla |
+| därutöver, därtill | dessutom, också |
+| i enlighet med | enligt |
+| föreligga | finnas |
+| inkomma med | skicka |
+| tillse, säkerställa (i varannan mening) | se till att |
+| emellertid | men |
+| erforderlig | som behövs |
+| ombesörja | ordna |
+| för närvarande, i dagsläget, i nuläget | nu |
+| med anledning av | eftersom, på grund av |
+| i syfte att | för att |
+| i samband med | när, vid |
+| i händelse av att | om |
+| på grund av det faktum att | eftersom |
+| har förmågan att | kan |
+| alternativt | eller |
+| starta upp | starta, börja |
+| orsaken till X berodde på | X berodde på |
+| tillhör en av | är en av |
+
+"Gällande" som preposition är det vanligaste enskilda tecknet på stel affärssvenska. Byt nästan alltid till "om".
+
+### A2. Översatt engelska
+
+Ord och uttryck som är begripliga men som en svensk inte skulle välja själv.
+
+| Översatt engelska | Svenska |
+|---|---|
+| låt oss titta på | vi tittar på, eller stryk |
+| adressera ett problem | ta itu med, hantera, svara på |
+| dyka djupare i | gå igenom närmare |
+| ta ägarskap över | ta ansvar för, äga frågan |
+| göra en skillnad | göra skillnad, påverka |
+| navigera (bildligt) | hantera, ta sig igenom, hitta rätt i |
+| resa (om process, "journey") | arbete, process, eller stryk |
+| leverera värde, leverera resultat | säg vilket värde: sänka kostnaden, korta ledtiden |
+| framåt (going forward) | framöver, från och med nu |
+| på daglig basis | varje dag |
+| i termer av | när det gäller, i fråga om |
+| det sagt | samtidigt, ändå |
+| i slutet av dagen | när allt kommer omkring, eller stryk |
+| byta ut X med Y | byta ut X mot Y |
+| applicera | använda, tillämpa |
+| ha en impact | påverka |
+| maila | mejla |
+| outsourca | lägga ut |
+| pressrelease | pressmeddelande |
+| tveka inte att höra av dig | hör av dig om något är oklart |
+| jag hoppas att detta mejl finner dig väl | stryk |
+| jag är glad att kunna meddela | säg nyheten direkt |
+
+**Falska vänner.** Ord som ser svenska ut men bär den engelska betydelsen. De är typiska för AI-text och maskinöversättning.
+
+| Engelska | Fel | Rätt |
+|---|---|---|
+| technology | teknologi | oftast teknik |
+| leadership | ledarskap (om personerna) | ledning |
+| massive | massiv | enorm, mycket stor |
+| familiar with | familjär med | förtrogen med, van vid |
+| eventually | eventuellt | till slut, så småningom |
+| realize | realisera | inse |
+| billion | biljon | miljard |
+| provisional | provisorisk (om resultat) | preliminär |
+
+**Grammatik från engelskan.**
+- Onödigt en/ett där engelskan har a/an: "Hon är konsult", inte "Hon är en konsult". "Han jobbar som säljchef", inte "som en säljchef".
+- Engelskt plural-s på lånord: scenarier, inte scenarios. Case blir case, inte cases, i löptext där det går.
+
+**Var inte purist.** Agenda, team, design, skala upp, proaktiv, i linje med och fokusera på är etablerad affärssvenska. Byt bara ut ett engelskt ord när det också är ett AI-tecken eller när ett enklare svenskt ord säger samma sak.
+
+### A3. Uppblåsning och AI-favoritord
+
+Ord som låter viktiga men inte säger något. Stryk dem eller ersätt med det konkreta de pekar på.
+
+avgörande, banbrytande, revolutionerande, transformativ, kraftfull, robust, sömlös, smidig, skräddarsydd, holistisk, ekosystem, synergier, nyckeln till, game changer, spelar en central roll, vittnar om, utgör ett tydligt bevis på, i grunden, på riktigt, unik möjlighet, värt att notera, kort sagt, med andra ord, i grund och botten
+
+Svenska läsare litar mer på understatement än superlativ. "Det fungerade" övertygar mer än "det var banbrytande".
+
+### A4. Ord som säger mer än du menar
+
+AI väljer ofta ord som lägger till en värdering eller ändrar betydelsen. Det märks mest i rapporter, analyser och beslutsunderlag.
+
+- **Förväntas eller väntas.** "Förväntas" antyder att någon hoppas på det. "Väntas" är neutralt. "Marknaden väntas växa."
+- **Tack vare eller på grund av.** "Tack vare" bara om något positivt. "Försäljningen föll på grund av vädret."
+- **Bör eller ska.** "Bör" är ett förslag, "ska" är ett beslut. Skriv inte "ska" om något som bara är föreslaget.
+- **Procent eller procentenheter.** Från 20 till 30 % är en ökning med 10 procentenheter, eller 50 %. Blanda inte ihop dem.
+- **Mindre eller färre.** "Mindre" om mängd och storlek, "färre" om antal. "Färre kunder", inte "mindre kunder".
+- **Ju ... desto.** "Ju tidigare, desto bättre", inte "ju tidigare, ju bättre".
+- **Chans och risk.** Båda värderar. "Det är möjligt att" är neutralt.
+
+---
+
+## B. Meningsbyggnad
+
+### B1. Nominaliseringar
+
+AI gör verb till substantiv: "genomförandet av", "säkerställandet av", "implementeringen av", "hanteringen av". Skriv om med verbet och en aktör.
+
+> Innan: Genomförandet av strategin och säkerställandet av intern förankring är förutsättningar för etableringen av en hållbar process.
+> Efter: Strategin fungerar bara om den är förankrad internt innan vi sätter igång.
+
+### B2. Det-inledningar som skjuter upp poängen
+
+"Det kan konstateras att", "det är viktigt att notera att", "det bör påpekas att", "det är tydligt att", "det råder ingen tvekan om att". Stryk inledningen och skriv påståendet.
+
+### B3. Passiv: skilj på naturlig och dold
+
+S-passiv är vanlig och naturlig svenska: "Fakturan skickas i början av månaden." Det är inget fel. Problemet är när passiven döljer vem som gör något och läsaren behöver veta det.
+
+> Dold: En strategiändring genomfördes under kvartalet.
+> Tydlig: Vi ändrade strategin i mars.
+
+### B4. Fina ord i stället för "är"
+
+"Utgör", "representerar", "fungerar som" och "kan beskrivas som" används ofta där "är" räcker. Byt när det bara är ett finare "är". Behåll "utgör" när det betyder andel: "Retail utgör 30 % av intäkterna" är bra svenska.
+
+### B5. Vilket-kedjor
+
+"..., vilket i sin tur bidrar till ..., vilket möjliggör ..." Varje "vilket" skjuter in en påstådd effekt utan belägg. Dela upp i meningar och behåll bara de effekter som finns i källtexten.
+
+### B6. Staplade reservationer
+
+"Det kan möjligen argumenteras att detta eventuellt skulle kunna ..." Ta ställning, eller skriv ut osäkerheten rakt: "Vi vet inte än om det håller över ett helt år."
+
+### B7. Satsradning
+
+Huvudsatser som bara radas upp med komma: "Vi skickade förslaget, de har inte svarat." Sätt punkt eller använd ett bindeord: "Vi skickade förslaget men de har inte svarat."
+
+### B8. Meningslängd
+
+Två korta meningar är oftast bättre än en lång och krånglig. Men många mycket korta meningar i rad blir hackigt. Variera.
+
+---
+
+## C. Retoriska AI-grepp
+
+Det här är de tydligaste tecknen, och de smyger sig in även när orden är rena.
+
+**Inte X, utan Y.** "Det handlar inte om teknik, det handlar om förtroende." "Det är inte en trend, det är en omfördelning." Skriv det du faktiskt menar som ett rakt påstående. Kontrastfiguren får användas en gång i en lång text om skribenten själv har den.
+
+**Iscensatta oneliners.** Korta, dramatiska meningar som ensamma stycken: "Brieferna blev längre. Men inte bättre." En kort mening som följer naturligt är bra. En som är placerad för effekt är ett tecken.
+
+**Tretal.** "Snabbt, enkelt och effektivt." Tre egenskaper utan förklaring är inget argument. Välj den viktigaste och visa den.
+
+**Landskapsöppning.** "I en alltmer digitaliserad värld", "i takt med den snabba utvecklingen", "spelplanen förändras". Stryk och börja med poängen.
+
+**Falsk balans.** "Å ena sidan ... å andra sidan ..." utan slutsats. Säg vad som väger tyngst.
+
+**Utmaningar och möjligheter.** "Trots utmaningarna finns stora möjligheter för de aktörer som ..." Stryk. Skriv vilka utmaningarna är och vad som krävs.
+
+**Generisk avslutning.** "Sammantaget", "avslutningsvis kan vi konstatera", "framåt ser det lovande ut". Avsluta med nästa steg, ett beslut eller en konkret slutsats.
+
+**Frågehak utan innehåll.** "Vad tänker du?" efter ett inlägg utan ståndpunkt. En fråga ska vara så specifik att någon kan svara på den.
+
+**Klyschor och modeord.** Slitna bilder och uttryck som "boven i dramat" eller "kolla upp" gör texten daterad och suddig. Använd dem sparsamt.
+
+---
+
+## D. Form och typografi
+
+Här syns AI-ursprunget ofta direkt, eftersom modellen följer engelska konventioner. Reglerna bygger på Språkrådets skrivregler och TT-språket, med några egna val som anges.
+
+**Tankstreck.** Använd inte tankstreck som paus eller inskott mitt i meningar. Skriv om med punkt, komma, kolon eller parentes. (Både Språkrådet och TT tillåter tankstreck sparsamt. Förbudet här är ett medvetet val, eftersom tankstreck är ett av de tydligaste AI-tecknen.) Kort streck utan mellanslag är rätt i intervall: 9–17, 3–5 dagar, Stockholm–Göteborg. Skriv inte "mellan 3–5", utan "3–5" eller "mellan 3 och 5".
+
+**Inget komma före "och" i uppräkningar.** "Pris, leveranstid och kvalitet", inte "pris, leveranstid, och kvalitet".
+
+**Citattecken.** Svenska citattecken har samma form i båda ändar: ”så här”. Inte “så här”. Använd dem sparsamt. Inga citattecken efter "så kallad".
+
+**Procent och kronor.** Använd normalt tecken och förkortning med mellanslag före: 30 %, 25 kr, 10 km. Skriv ut "procent" och "kronor" i talmanus som ska läsas högt och när det låter bättre i en personlig, berättande text.
+
+**Siffror.**
+- Ett till tolv skrivs normalt med bokstäver i löptext: "tre kunder", "tolv månader". Använd siffror vid enheter (3 kg, 5 %), decimaler, i tabeller och på bilder, och när små och stora tal står bredvid varandra ("2 av 15").
+- Mellanslag som tusentalsavgränsare och komma som decimaltecken: 10 000, 3,5 miljoner. Inte 10,000 eller 3.5.
+- Båda talen i ett intervall ska vara fullständiga: 500–600 kr, inte 5–600 kr.
+- Decimaltal följs av plural: 1,2 miljarder, 1,5 timmar.
+- Engelskans billion är miljard på svenska.
+
+**Datum och tid.** I löptext: 15 april 2026. Fristående: 2026-04-15. Klockslag: kl. 9.45 (kolon går också). Aldrig "April 15" eller "15/4/2026".
+
+**Versaler.** Bara första ordet i rubriker får stor bokstav: "Så mäter vi effekten", inte "Så Mäter Vi Effekten". Veckodagar och månader med liten bokstav: måndag, mars. "Du" och "ni" med liten bokstav.
+
+**Utropstecken.** Högst ett per text, och helst inget i affärstext.
+
+**Formatering.** Inga emojis som punktmarkörer eller dekoration (✅ 🚀 💡 👉). Ingen fetstil på ord mitt i löptext. Inga punktlistor för resonemang som ryms i två meningar. Listor är bra när innehållet faktiskt är en lista: steg, specifikationer, jämförelser.
+
+**Ordformer.** Skriv "sa", inte "sade", och "ska", inte "skall". "Sade" är nyhetsspråk och låter stelt i affärstext.
+
+---
+
+## E. Tilltal och relation till läsaren
+
+**Fjäsk.** "Vilken bra fråga!", "Tack för att du delar det här", "Hoppas det hjälper!", "Stort lycka till!" Stryk.
+
+**Garderingar om den egna kunskapen.** "Baserat på tillgänglig information", "inom ramen för mina kunskaper". Skriv vad som är osäkert och varför, inte att skribenten är osäker.
+
+**Du, inte ni.** I Sverige säger man du även till kunder och chefer. "Ni" används bara till flera personer eller en organisation.
+
+---
+
+## F. Frekvenstest när du är osäker
+
+När du inte vet om en fras är naturlig svenska, kontrollera hur ofta den faktiskt används. Språkbankens sökverktyg Korp söker i miljarder ord från tidningar, bloggar och forum och går att fråga direkt med WebFetch.
+
+**Sökadress:**
+
+```
+https://ws.spraakbanken.gu.se/ws/korp/v8/count?cqp=[word="ORD1"][word="ORD2"]&corpus=KUBORD2-DN-2024,GP2013,WEBBNYHETER2010,BLOGGMIX2015,FAMILJELIV-ALLMANNA-FAMILJELIV&group_by=word
+```
+
+Ett ord per hakparentes. Böjningsformer anges med lodstreck: `[word="adressera|adresserar|adresserade"]`. Ett valfritt mellanord skrivs `[]{0,3}`.
+
+**Gör så här:** Sök på den misstänkta frasen och på det svenska alternativet med samma korpusar. Jämför totalsiffrorna.
+
+- Under en tiondel av alternativets träffar: byt.
+- Mellan en tiondel och hälften: båda fungerar, välj det som passar registret.
+- Ungefär lika många eller fler: frasen är etablerad, behåll den.
+
+**Uppmätta exempel** (oktober 2026, samma fem korpusar):
+
+| Fras | Träffar | Alternativ | Träffar |
+|---|---|---|---|
+| adressera problemet/frågan | 3 | ta itu med | 768 |
+| byta ut X med Y | 42 | byta ut X mot Y | 439 |
+| teknologi | 425 | teknik | 3 916 |
+
+**Begränsningar.** De flesta korpusarna är från 2010-talet, så ny affärsjargong syns dåligt. Forum och bloggar drar åt det informella. Testet visar vad som är vanligt, inte vad som passar i en offert. Kör det bara vid verklig tveksamhet, inte på varje text, och redovisa siffrorna bara om användaren ber om det.
+
+---
+
+## Texttyper
+
+### Mejl
+
+- **Ämnesrad** som säger vad det gäller och gärna vad du vill: "Offerten: beslut senast fredag?" Inte "Uppföljning" eller "Gällande vårt möte".
+- **Hälsning:** "Hej Anna," eller "Hej Anna". Inte "Kära Anna" i jobbsammanhang.
+- **Första meningen** säger varför du skriver eller vad du behöver. Ingen uppvärmning.
+- **Ett ärende per mejl** när det går. Den du skriver till ska förstå vad som förväntas av henne.
+- **Avslut:** "Hälsningar", "Vänliga hälsningar" eller "Ha det bra" beroende på relation. "Med vänlig hälsning" i formella sammanhang.
+- **Längd:** kortare än du tror. Ett mejl som kräver scrollning är ofta två mejl, eller ett möte.
+
+### Presentationer
+
+- **Rubriken är budskapet.** Skriv rubriken som en hel mening som säger slutsatsen: "Leveranstiden har halverats sedan i våras", inte "Leveranstid". Den som bara läser rubrikerna ska förstå hela presentationen.
+- **En poäng per bild.**
+- **Högst tre eller fyra punkter**, korta, och konsekvent formade: antingen alla som hela meningar med punkt eller alla som fragment utan.
+- **Siffror på bilder** skrivs alltid med siffror och tecken: 3 %, 12 mkr.
+- **Talmanus skrivs som tal.** Korta meningar, "vi" och "ni", inga nominaliseringar, "procent" och "kronor" utskrivna. Läs det högt.
+- **Sista bilden** säger vad publiken ska göra eller besluta. "Tack!" eller "Frågor?" ensamt är ingen avslutning.
+
+### Rapporter och analyser
+
+- Sammanfattningen sammanfattar resultatet. Den introducerar inte ämnet.
+- Det viktigaste först, både i sammanfattningen och i varje avsnitt.
+- Påståenden har källa eller tydlig härledning. Saknas källan, markera `[källa]`.
+- Skriv slutsatser med aktör: "vi rekommenderar", inte "det rekommenderas".
+- Kontrollera ordval enligt A4. Värderande ord smyger sig lätt in i analyser.
+
+### Artiklar och debatt
+
+- Öppna med ett konkret påstående eller en iakttagelse, inte med en beskrivning av läget.
+- Säg vad du tycker och varför. Säg också vad du inte vet.
+- Avsluta med ett omdöme eller en konsekvens, inte med en öppen fråga.
+
+### LinkedIn
+
+- **Första raden** är en kort fråga eller ett överraskande påstående som får folk att klicka "se mer".
+- Bygg på något konkret: en erfarenhet, en siffra, ett exempel. Bara om det finns i underlaget.
+- Korta stycken, men inte en mening per rad genom hela inlägget.
+- **CTA** med en tydlig rekommendation eller konkret detalj, inte ett allmänt "vad tänker du?".
+- **3–5 hashtags** som faktiskt beskriver innehållet.
+- "Jag är glad att kunna meddela att ..." blir "Från och med måndag ...".
+
+---
+
+## Exempel
+
+Exemplen visar riktningen. Hakparenteserna är avsiktliga: källtexten saknar uppgifterna och de ska inte hittas på.
+
+### Mejl
+
+**Innan:**
+> Ämne: Uppföljning gällande vårt möte
+>
+> Hej Anna!
+>
+> Jag hoppas att detta mejl finner dig väl. Jag vill börja med att tacka för ett mycket givande och inspirerande möte i tisdags. Som diskuterat skulle vi gärna vilja adressera de utmaningar ni lyfte gällande er mätning, och vi är övertygade om att vår lösning kan leverera betydande värde för er verksamhet. Bifogat finner du ett förslag som vi har tagit fram i syfte att möjliggöra en smidig och effektiv implementering.
+>
+> Tveka inte att höra av dig om du har några frågor!
+>
+> Bästa hälsningar
+
+**Efter:**
+> Ämne: Förslag på mätupplägg
+>
+> Hej Anna,
+>
+> Tack för i tisdags. Du nämnde att ni har svårt att [konkret mätproblem]. Jag har skissat på hur vi kan lösa det. Förslaget ligger bifogat.
+>
+> Kort version: [en mening om vad förslaget går ut på].
+>
+> Kan du titta på det före [datum]? Jag går gärna igenom det på telefon om det är enklare.
+>
+> Hälsningar
+> [Namn]
+
+Ändringar: stel inledning och fjäsk borta, "gällande" och översatt engelska bytta, ett tydligt nästa steg. Fyll i mätproblemet, förslaget i en mening och datum.
+
+### Presentationsbild
+
+**Innan:**
+> **Marknadsöversikt**
+> 🚀 Retail media växer snabbt och spelar en allt viktigare roll
+> 💡 Mätbarhet är avgörande för framgång
+> ✅ Möjligheterna är stora för aktörer som agerar proaktivt
+
+**Efter:**
+> **Retail media växer snabbt och mätbarheten avgör vem som får budgeten**
+> Tillväxt: [siffra, källa, år]
+> Det annonsörerna saknar: [t.ex. mätning av merförsäljning i stället för klick]
+
+Ändringar: rubriken bär budskapet, emojis borta, tredje punkten struken eftersom den inte säger något. Ersätt den med vad publiken ska göra, om bilden behöver det.
+
+### Rapportmening
+
+**Innan:**
+> Tack vare den svaga kronan förväntas importkostnaderna öka med 3%, vilket innebär att marginalen kommer att minska med 2% och att vi ska se över prissättningen.
+
+**Efter:**
+> På grund av den svaga kronan väntas importkostnaderna öka med 3 %. Det minskar marginalen med 2 procentenheter. Vi föreslår att prissättningen ses över.
+
+Ändringar: "tack vare" om något negativt, "förväntas" och "ska" om ett förslag rättade, procent och procentenheter åtskilda, mellanslag före %, vilket-kedjan delad. Kontrollera att "2 procentenheter" stämmer med källan, för originalet säger "2%".
+
+---
+
+## Källor vid tveksamhet
+
+- **Språkrådets skrivregler** för stavning, skiljetecken, siffror och datum.
+- **TT-språket** (tt-spraket.tt.se) för ordval, falska vänner, anglicismer och siffror i löptext. TT skriver nyhetsspråk, så ta inte över deras stilval ("sade", "procent" i stället för %) utan att pröva dem mot affärstext.
+- **Språkbanken/Korp** för att se hur ofta en fras faktiskt används. Se avsnitt F.
+
+---
+
+## Slutkontroll
+
+Gå igenom innan texten levereras:
+
+1. Har jag lagt till något som inte fanns i källtexten? Ta bort det eller gör det till en hakparentes.
+2. Finns det tankstreck som paus, komma före "och" i uppräkningar, engelska citattecken, "30%" utan mellanslag, ofullständiga intervall eller amerikanska datumformat?
+3. Finns det "gällande", "erhålla", "tillhandahålla", "säkerställa", "teknologi" eller andra ord från A1 och A2?
+4. Säger orden mer än källtexten menar? Kontrollera förväntas, tack vare, ska, procent och mindre enligt A4.
+5. Finns det "inte X, utan Y", en iscensatt oneliner, ett tretal eller en generisk avslutning?
+6. Läs texten högt i huvudet. Var stannar du upp eller låter det som ett pressmeddelande? Skriv om just där.
+7. Varierar meningslängden? Om alla meningar är ungefär lika långa, slå ihop två eller korta en.
+8. Vet läsaren vad som ska hända härnäst?

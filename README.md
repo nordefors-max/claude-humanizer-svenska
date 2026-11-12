@@ -1,145 +1,112 @@
-# 🇸🇪 Humanizer på Svenska
+# Humanizer på svenska
 
-**A Claude skill for removing AI-generated writing patterns from Swedish professional text.**
+**A Claude skill that rewrites or reviews Swedish text so it reads like normal Swedish, not like AI output or translated English.**
 
-Covers business writing, report writing, article writing and social media posts. Built on documented patterns from observed AI output in Swedish, with a focus on patterns that have no equivalent in English-language humanizer tools.
+Built for emails, presentations, reports, articles and LinkedIn posts. It also works as a silent final check whenever Claude writes Swedish.
 
 ---
 
 ## Why this exists
 
-Most AI humanizer tools are built for English. The few that support Swedish apply English detection logic translated directly, missing patterns that are specific to how LLMs generate Swedish text.
+Most humanizer tools are built for English. The ones that support Swedish usually translate English rules, which misses what actually gives Swedish AI text away: bureaucratic vocabulary ("gällande", "erhålla"), false friends ("teknologi", "massiv"), English typography (dashes, Oxford commas, "30%", curly quotes) and value-laden words that change the meaning ("förväntas", "tack vare").
 
-This skill is built from the ground up for Swedish, with pattern categories that reflect how AI actually writes in Swedish: nominalization overuse, passive voice as false formality, direct anglification imports, and significance inflation dressed in Swedish vocabulary.
+This skill is written for Swedish from the start. Its rules are checked against Språkrådet's writing rules and TT-språket, and doubtful phrases can be tested against real usage in Språkbanken's corpora.
 
-The English [Humanizer skill](https://github.com/blader/humanizer/tree/main) covers the foundational logic. This skill inherits that logic and replaces the vocabulary and examples with Swedish-specific content.
+---
+
+## Core rules
+
+1. **Change how it is written, not what it says.** No added claims, numbers, sources or opinions. Missing facts are marked in brackets, e.g. `[källa]`, for the writer to fill in.
+2. **Never invent concrete details** to make the text sound more human.
+3. **Match the writer's voice.** Don't make the text sharper or more opinionated than the writer is.
 
 ---
 
 ## What it covers
 
-### 10 pattern categories
+| Section | Content |
+|---|---|
+| A. Word choice | Bureaucratic words, translated English, false friends, inflated AI vocabulary, words that say more than you mean |
+| B. Sentence structure | Nominalisations, delayed "det"-openings, hidden passives, "vilket" chains, stacked hedging, comma splices, sentence length |
+| C. Rhetorical AI tells | "Inte X, utan Y", staged one-liners, rule of three, landscape openings, generic closings, empty questions |
+| D. Form and typography | Dashes, commas, quotation marks, %, numbers, dates, capitalisation, emojis, sa/sade |
+| E. Tone | Sycophancy, knowledge disclaimers, du/ni |
+| F. Frequency test | Checking a doubtful phrase against Språkbanken's Korp corpora |
 
-| # | Pattern | Example trigger |
-|---|---|---|
-| 1 | Significance inflation | "banbrytande", "avgörande", "vittnar om" |
-| 2 | Landscape and trend framing | "i en alltmer digitaliserad värld", "spelplanen förändras" |
-| 3 | Participle phrases as fake analysis | "belyser vikten av", "understryker behovet av" |
-| 4 | Vague attribution | "experter menar", "branschkällor pekar på" |
-| 5 | Passive voice as false formality | "det kan konstateras att", "det bör påpekas att" |
-| 6 | Nominalization overuse | "implementeringen av", "möjliggörandet av" |
-| 7 | Anglification imports | "ta ägarskap över", "navigera förändringen", "holistiskt" |
-| 8 | Structural AI patterns | even paragraph blocks, rule of three, formulaic closings |
-| 9 | Negative parallelism | "Det är inte längre en fråga om om, utan när" |
-| 10 | Social media tells | vague CTAs, landscape openings, generic hashtag stacks |
+Plus guidance per text type (email, presentation, report, article, LinkedIn), worked before/after examples and an eight-point final checklist.
 
-### Register guidance for 4 output types
+### Modes
 
-- **Business writing** – proposals, presentations, internal comms
-- **Report writing** – analysis, summaries, strategy documents, executive summaries
-- **Acrticle writing** – industry commentary, thought leadership, editorial
-- **Social media writing** – LinkedIn and equivalent professional channels
-
-### 4 full before/after examples
-
-One complete worked example per output type, each including a draft rewrite, a Swedish-language self-audit step, and a final version with change summary.
-
-### Quick-reference substitution table
-
-20 of the most common AI-Swedish phrases with direct replacements.
+- **Rewrite (default):** returns the rewritten text and at most three short lines on what changed.
+- **Review:** quotes the weakest phrasings, explains why and suggests fixes.
+- **Silent check:** runs the checklist on Claude's own Swedish output without reporting it.
 
 ---
 
 ## Installation
 
-**Recommended** (clone directly into Claude Code skills directory)
+**Clone into the Claude Code skills directory**
 
 ```bash
 mkdir -p ~/.claude/skills
-git clone https://github.com/humanizer-svenska.git ~/.claude/skills/humanizer-svenska
+git clone https://github.com/nordefors-max/claude-humanizer-svenska.git ~/.claude/skills/humanizer-svenska
 ```
 
-**Manual install** (if you already have the file)
+**Manual install**
 
 ```bash
 mkdir -p ~/.claude/skills/humanizer-svenska
 cp SKILL.md ~/.claude/skills/humanizer-svenska/
 ```
 
+In claude.ai you can upload `SKILL.md` as a skill under Settings.
+
 ---
 
 ## Usage
 
-In Claude Code, invoke the skill:
-
 ```
 /humanizer-svenska
-
 ```
 
-Or ask Claude directly:
+Or ask directly:
 
 ```
-Humanisera den här texten:
+Skriv om det här mejlet så att det låter som vanlig svenska:
 ```
 
-**Specify output type for best results**
-
-The skill handles four registers with different conventions. If you specify the type upfront, the skill applies the right guidance from the start:
-
 ```
-/humanizer-svenska rapport
-
+Granska den här presentationen. Vad låter som AI?
 ```
 
-Available types: `affärsskrivande`, `rapport`, `artikel`, `sociala medier`
-
-If no type is specified, the skill will infer it from the text.
-
-The skill will:
-1. Identify or confirm the output type
-2. Scan for the 10 pattern categories
-3. Produce a draft rewrite
-4. Run the Swedish self-audit ("Vad avslöjar att det här är AI-genererat?")
-5. Deliver a final version with an optional change summary
+The text type is inferred from the input. Section F (frequency test) needs a session with web fetch access; without it the rest of the skill works as normal.
 
 ---
 
-## Examples
+## Sources
 
-The [`examples/`](./examples/) folder contains input/output pairs for each output type:
+- [Språkrådet, Snabba skrivregler](https://writing.chalmers.se/wp-content/uploads/2024/06/Snabba-skrivregler-Sprakradet-1.pdf): spelling, punctuation, numbers and dates
+- [TT-språket](https://tt-spraket.tt.se/): word choice, false friends, anglicisms and numbers in running text
+- [Språkbanken Korp](https://spraakbanken.gu.se/korp/): how often a phrase is actually used in Swedish
 
-| File | Type |
-|---|---|
-| [`examples/affarstext.md`](./examples/affarstext.md) | Business writing |
-| [`examples/rapport.md`](./examples/rapport.md) | Report writing |
-| [`examples/artikel.md`](./examples/artikel.md) | Article writing |
-| [`examples/sociala-medier.md`](./examples/sociala-medier.md) | Social media |
+TT writes news Swedish, so some of its style choices ("sade", "procent" instead of %) are deliberately not adopted for business writing.
 
 ---
 
-## Design principles
+## Deliberate choices
 
-**Built for Swedish, not translated from English.**
-The vocabulary list, examples, and register guidance are written from scratch based on observed Swedish AI output. The structural logic from the English Humanizer skill is retained but none of the content is carried over.
-
-**Professional writing, not academic.**
-This skill is tuned for business, editorial, and professional social media output. Academic writing has different conventions and a different AI pattern profile. It is out of scope here.
-
-**Pattern-based, not detector-based.**
-The skill does not run statistical detection. It teaches Claude to recognise named patterns the same way an experienced Swedish editor would. This makes it more robust to model updates than perplexity-based approaches.
-
-**Voice injection, not just pattern removal.**
-Removing AI patterns produces clean but often flat text. The skill includes active guidance on what Swedish professional voice sounds like: direct, specific, active, grounded in Nordic communication norms. The goal is not undetectable text but genuinely better text.
+- **No dashes as pauses.** Both Språkrådet and TT allow them sparingly. The skill bans them because they are one of the clearest AI tells.
+- **% and kr by default**, with a space before. Written out in speaker notes.
+- **"sa", not "sade".**
+- **Not purist.** Established business loanwords such as agenda, team and design are fine.
 
 ---
 
 ## Limitations
 
-- **Social media scope** is currently limited to LinkedIn and equivalent professional channels. Consumer-facing platforms (Instagram, TikTok) have different conventions not covered here.
-- **Vocabulary evolves.** AI vocabulary shifts with model updates. The trigger word lists reflect patterns from GPT-4 and GPT-4o era output (2023–2025). New patterns may emerge that are not yet documented.
-- **No academic writing.** Legal, scientific, and academic Swedish have different formality conventions. Applying this skill to those genres may overcorrect.
-- **The skill does not source-check.** When the before/after examples in Section 4 (vague attribution) suggest replacing vague claims with specific sources, that is illustrative. The user is responsible for verifying any statistics or citations.
+- Professional writing only. Legal, academic and scientific Swedish follow other conventions.
+- Most Korp corpora are from the 2010s, so newer business jargon is underrepresented, and forums skew informal.
+- AI vocabulary changes with new models. The lists need regular updates.
 
 ---
 
@@ -147,9 +114,7 @@ Removing AI patterns produces clean but often flat text. The skill includes acti
 
 See [`CHANGELOG.md`](./CHANGELOG.md).
 
----
-
 ## Related
 
-- [Humanizer (English)](https://github.com/anthropics/claude-skills/tree/main/humanizer) – the English-language skill this is based on
-- [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) – the foundational reference for pattern documentation
+- [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)
+- [Humanizer (English)](https://github.com/blader/humanizer)
